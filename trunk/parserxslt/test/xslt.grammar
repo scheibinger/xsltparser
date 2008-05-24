@@ -1,0 +1,210 @@
+//todo: produkcjie w template,
+Package xslt;
+Helpers
+	cr = 13;
+    lf = 10;
+    tab = 9;
+    digit = ['0' .. '9'];
+    nondigit = ['_' + [['a' .. 'z'] + ['A' .. 'Z']]];
+Tokens
+    sign = '+' | '-';
+	dot = '.';
+	comma = ',';
+	colon = ':';
+	semicolon = ';';
+	l_par = '(';
+	r_par = ')';
+	l_bracket = '[';
+	r_bracket = ']';
+	l_brace = '{';
+	r_brace = '}';
+	star = '*';
+	div = '/';
+	mod = '%';
+	ampersand = '&';
+	plus = '+';
+	minus = '-';
+	caret = '^';
+	tilde = '~';
+	bar = '|';
+	equal = '=';
+	eq = '==';
+	neq = '!=';
+	open_tag = '<';
+	close_tag = '>';
+	close_tag_range='/>';
+	blank = (cr | lf | tab | ' ')+;
+	xml='xml'|'XML';
+	html='html'|'HTML';
+	text_format='text'|'TEXT';
+	href='href'|'HREF';
+	yes='yes'|'YES';
+	no='no'|'NO';
+	style='stylesheet'|'STYLESHEET'|'transform'|'TRANSFORM';
+	xslt_tag = '<xsl:'|'<XSL:';
+	close_xslt_tag = '</xsl:'|'</XSL:';
+	version='VERSION'|'version';
+	version_option='"1.0"'; 
+	xmlns='xmlns'|'XMLNS';
+	xsl_url='xsl="http://www.w3.org/1999/XSL/Transform"';
+	xmlns_url='xmlns="http://www.w3.org/1999/xhtml"';
+	output='output'|'OUTPUT';
+	method='method'|'METHOD';
+	encoding='encoding'|'ENCODING';
+	omit_xml_declaration='omit-xml-declaration'|'OMIT-XML-DECLARATION';
+	standalone='standalone'|'STANDALONE';
+	doctype_public='doctype-public'|'DOCTYPE-PUBLIC';
+	doctype_system='doctype-system'|'DOCTYPE-SYSTEM';
+	cdata_section_elements='cdata-section-elements'|'CDATA-SECTION-ELEMENTS';
+	indent='indent'|'INDENT';
+	media_type='media-type'|'MEDIA-TYPE';
+	import='import'|'IMPORT';
+	include='include'|'INCLUDE';
+	name='name'|'NAME';
+	select='select'|'SELECT';
+	param='param'|'PARAM';
+	variable='variable'|'VARIABLE';
+	match='match'|'MATCH';
+	template='template'|'TEMPLATE';
+	mode='mode'|'MODE';
+	priority='priority'|'PRIORITY';
+	apply_templates='apply-templates'|'APPLY-TEMPLATES';
+	apply_imports='apply-imports'|'APPLY-IMPORTS';
+	call_template='call-template'|'CALL-TEMPLATE';
+	choose='choose'|'CHOOSE';
+	comment='comment'|'COMMENT';
+	copy='copy'|'COPY';
+	copy_of='copy-of'|'COPY-OF';
+	element='element'|'ELEMENT';
+	for_each='for-each'|'FOR-EACH';
+	fallback='fallback'|'FALLBACK';
+	if='if'|'IF';
+	message='message'|'MESSAGE';
+	terminate='terminate'|'TERMINATE';
+	number='number'|'NUMBER';
+	processing_instruction=':processing-instruction'|'PROCESSING-INSTRUCTION';
+	disable_output_escaping='disable-output-escaping'|'DISABLE-OUTPUT-ESCAPING';
+	value_of='value-of'|'VALUE-OF';
+	sort='sort'|'SORT';
+	order='order'|'ORDER';
+	ascending='ascending'|'ASCENDING';
+	descending='descending'|'DESCENDING';
+	case_order='case-order'|'CASE-ORDER';
+	upper_first='upper-first'|'UPPER-FIRST';
+	lower_first='lower-first'|'LOWER-FIRST';
+	lang='lang'|'LANG';
+	data_type='data-type'|'DATA-TYPE';
+	with_param='with-param'|'WITH-PARAM';
+	attribute='attribute'|'ATTRIBUTE';
+	when='when'|'WHEN';
+	test='test'|'TEST';
+	namespace='namespace'|'NAMESPACE';
+	count='coutn'|'COUNT';
+	level='level'|'LEVEL';
+	single='single'|'SINGLE';
+	multiple='multiple'|'MULTIPLE';
+	any='any'|'ANY';
+	from='from'|'FROM';
+	value='value'|'VALUE';
+	format='format'|'FORMAT';
+	letter_value='letter-value'|'LETTER-VALUE';
+	alphabetic='alphabetic'|'ALPHABETIC';
+	traditional='traditional'|'TRADITIONAL';
+	grouping_separator='grouping-separator'|'GROUPING-SEPARATOR';
+	grouping_size='grouping-size'|'GROUPING-SIZE';
+	attribute_set='attribute-set'|'ATTRIBUTE-SET';
+	text_to_pass=(digit|nondigit|'<'|'/'|'>'|':'|'='|'!'|'?');
+	digits='-'?digit*;
+	
+Ignored Tokens
+    blank;
+
+Productions
+	file = header document footer;
+	footer = close_xslt_tag style close_tag;
+	header = xslt_tag style version equal version_option xmlns colon xsl_url xmlns_url close_tag set_output;
+	set_output = xslt_tag output output_options close_tag_range;
+	output_options = 
+				{single} output_option |
+				{multiple} output_options output_option;
+	output_option = 
+				{method_xml} method equal xml |
+				{method_html} method equal html |
+				{method_text} method equal text_format |
+				{version} version equal text |
+				{encoding} encoding equal text |
+				{omit_xml_declaration_yes}omit_xml_declaration equal yes |
+				{omit_xml_declaration_no}omit_xml_declaration equal no |
+				{standalone_yes} standalone equal yes |
+				{standalone_no} standalone equal no |
+				{doctype_public} doctype_public equal text |
+				{doctype_system} doctype_system equal text |
+				{cdata_section_elements} cdata_section_elements equal text |
+				{indent_yes} indent equal yes |
+				{indent_no} indent equal no |
+				{media_type} media_type equal text;		 
+	document =  imports? inner_elements;
+	
+	imports = 
+				{single} import_element |
+				{multiple} imports import_element;
+	import_element = 
+				{import} xslt_tag import href equal text close_tag_range |
+				{include} xslt_tag include href equal text close_tag_range;		
+	inner_elements = 
+				{single} inner_element |
+				{multiple} inner_elements inner_element;
+	inner_element =
+				{param} xslt_tag param name equal [param_name]:text select [param_select]:text close_tag_range |
+				{variable} xslt_tag variable name equal [param_name]:text select [param_select]:text close_tag_range |
+				{attribute} xslt_tag [open]:attribute_set name equal text [close_attribute]:close_tag attributes close_xslt_tag [close]:attribute_set [close_xslt]:close_tag |			
+				{template} template_element;
+	attributes = 
+				{single}attribute_element |
+				{multiple} attributes attribute_element;
+	attribute_element = xslt_tag [open]:attribute name equal text [close_attribute]:close_tag template_content* close_xslt_tag [close]:attribute [close_xslt]:close_tag;
+	template_element =
+				{match} xslt_tag  [open]:template match equal text template_options [close_template]:close_tag template_content* close_xslt_tag [close]:template [close_xslt]:close_tag | 
+				{name} xslt_tag  [open]:template name equal text template_options [close_template]:close_tag template_content* close_xslt_tag [close]:template [close_xslt]:close_tag; 
+	template_options = 
+				{mode} mode equal text |
+				{priority} priority equal digits;
+	template_content =
+				{apply_imports} xslt_tag apply_imports close_tag |
+				{apply_templates} xslt_tag [open]:apply_templates apply_templates_options? [close_apply_templates]:close_tag apply_templates_parameters close_xslt_tag [close]:apply_templates [close_xslt]:close_tag |
+				{attribute} attribute_element |
+				{call_template} xslt_tag [open]:call_template name equal text [close_call_template]:close_tag parameter close_xslt_tag [close]:call_template [close_xslt]:close_tag |
+				{choose} xslt_tag [open]:choose [close_choose]:close_tag tests close_xslt_tag [close]:choose [close_xslt]:close_tag |
+				{comment} xslt_tag [open]:comment [close_comment]:close_tag text close_xslt_tag [close]:comment [close_xslt]:close_tag |
+				{copy} xslt_tag [open]:copy [close_copy]:close_tag template_content* close_xslt_tag [close]:copy [close_xslt]:close_tag |
+				{copy_of} xslt_tag copy_of select equal text close_tag_range |
+				{element} xslt_tag [open]:element name equal text [close_element]:close_tag template_content* close_xslt_tag [close]:element [close_xslt]:close_tag |
+				{fallback} xslt_tag [open]:fallback [close_fallback]:close_tag template_content* close_xslt_tag [close]:fallback [close_xslt]:close_tag |
+				{for_each} xslt_tag [open]:for_each select equal text [close_for_each]:close_tag sorting? template_content* close_xslt_tag [close]:for_each [close_xslt]:close_tag |
+				{if} xslt_tag [open]:if test equal text [close_if]:close_tag template_content* close_xslt_tag [close]:if [close_xslt]:close_tag |
+				{value_of} xslt_tag value_of select equal text close_tag_range |
+				{param} xslt_tag [open]:param name equal [param_name]:text select [param_select]:text [close_param]: close_tag template_content* close_xslt_tag [close]:param [close_xslt]:close_tag |
+				{variable} xslt_tag [open]:variable name equal [variable_name]:text select [variable_select]:text [close_variable]: close_tag template_content* close_xslt_tag [close]:variable [close_xslt]:close_tag |
+				{passthru} open_tag text_to_pass* xslt_tag;
+	apply_templates_options =
+				{select}select equal text |
+				{mode}mode equal text;
+	apply_templates_parameters =
+				{parameter}parameter |
+				{sorting} sorting;
+	sorting = xslt_tag sort sort_options? close_tag;
+	sort_options = 
+				{select}select equal text |
+				{order_asc} order equal ascending |
+				{order_desc} order equal descending|
+				{case_order_upper} case_order equal upper_first |
+				{case_order_lowea} case_order equal lower_first |
+				{lang} lang equal xml colon text |
+				{data_type_text} data_type equal text |
+				{data_type_number} data_type equal number;
+	parameter = xslt_tag [open]:with_param name equal text [close_with_param]:close_tag template_content* close_xslt_tag [close]:with_param [close_xslt]:close_tag;
+	tests = 
+				{single}test_element|
+				{multiple}tests test_element;
+	test_element = xslt_tag [open]:when test equal text [close_when]:close_tag template_content* close_xslt_tag [close]:when [close_xslt]:close_tag;
+	text = text_to_pass;		
