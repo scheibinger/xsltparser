@@ -274,6 +274,11 @@ public class AnalysisAdapter implements Analysis
         defaultCase(node);
     }
 
+    public void caseAApplyTemplates2TemplateContent(AApplyTemplates2TemplateContent node)
+    {
+        defaultCase(node);
+    }
+
     public void caseAAttributeTemplateContent(AAttributeTemplateContent node)
     {
         defaultCase(node);
@@ -965,6 +970,11 @@ public class AnalysisAdapter implements Analysis
     }
 
     public void caseTTextToPass(TTextToPass node)
+    {
+        defaultCase(node);
+    }
+
+    public void caseTWords(TWords node)
     {
         defaultCase(node);
     }

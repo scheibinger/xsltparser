@@ -53,6 +53,7 @@ public interface Analysis extends Switch
     void caseAPriorityTemplateOptions(APriorityTemplateOptions node);
     void caseAApplyImportsTemplateContent(AApplyImportsTemplateContent node);
     void caseAApplyTemplatesTemplateContent(AApplyTemplatesTemplateContent node);
+    void caseAApplyTemplates2TemplateContent(AApplyTemplates2TemplateContent node);
     void caseAAttributeTemplateContent(AAttributeTemplateContent node);
     void caseACallTemplateTemplateContent(ACallTemplateTemplateContent node);
     void caseAChooseTemplateContent(AChooseTemplateContent node);
@@ -193,6 +194,7 @@ public interface Analysis extends Switch
     void caseTGroupingSize(TGroupingSize node);
     void caseTAttributeSet(TAttributeSet node);
     void caseTTextToPass(TTextToPass node);
+    void caseTWords(TWords node);
     void caseTDigits(TDigits node);
     void caseEOF(EOF node);
 }
