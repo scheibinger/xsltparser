@@ -2,15 +2,12 @@
 
 package xslt.node;
 
-import java.util.*;
 import xslt.analysis.*;
 
 @SuppressWarnings("nls")
 public final class APassthruTemplateContent extends PTemplateContent
 {
-    private TOpenTag _openTag_;
-    private final LinkedList<TTextToPass> _textToPass_ = new LinkedList<TTextToPass>();
-    private TXsltTag _xsltTag_;
+    private PText _text_;
 
     public APassthruTemplateContent()
     {
@@ -18,16 +15,10 @@ public final class APassthruTemplateContent extends PTemplateContent
     }
 
     public APassthruTemplateContent(
-        @SuppressWarnings("hiding") TOpenTag _openTag_,
-        @SuppressWarnings("hiding") List<TTextToPass> _textToPass_,
-        @SuppressWarnings("hiding") TXsltTag _xsltTag_)
+        @SuppressWarnings("hiding") PText _text_)
     {
         // Constructor
-        setOpenTag(_openTag_);
-
-        setTextToPass(_textToPass_);
-
-        setXsltTag(_xsltTag_);
+        setText(_text_);
 
     }
 
@@ -35,9 +26,7 @@ public final class APassthruTemplateContent extends PTemplateContent
     public Object clone()
     {
         return new APassthruTemplateContent(
-            cloneNode(this._openTag_),
-            cloneList(this._textToPass_),
-            cloneNode(this._xsltTag_));
+            cloneNode(this._text_));
     }
 
     public void apply(Switch sw)
@@ -45,16 +34,16 @@ public final class APassthruTemplateContent extends PTemplateContent
         ((Analysis) sw).caseAPassthruTemplateContent(this);
     }
 
-    public TOpenTag getOpenTag()
+    public PText getText()
     {
-        return this._openTag_;
+        return this._text_;
     }
 
-    public void setOpenTag(TOpenTag node)
+    public void setText(PText node)
     {
-        if(this._openTag_ != null)
+        if(this._text_ != null)
         {
-            this._openTag_.parent(null);
+            this._text_.parent(null);
         }
 
         if(node != null)
@@ -67,81 +56,23 @@ public final class APassthruTemplateContent extends PTemplateContent
             node.parent(this);
         }
 
-        this._openTag_ = node;
-    }
-
-    public LinkedList<TTextToPass> getTextToPass()
-    {
-        return this._textToPass_;
-    }
-
-    public void setTextToPass(List<TTextToPass> list)
-    {
-        this._textToPass_.clear();
-        this._textToPass_.addAll(list);
-        for(TTextToPass e : list)
-        {
-            if(e.parent() != null)
-            {
-                e.parent().removeChild(e);
-            }
-
-            e.parent(this);
-        }
-    }
-
-    public TXsltTag getXsltTag()
-    {
-        return this._xsltTag_;
-    }
-
-    public void setXsltTag(TXsltTag node)
-    {
-        if(this._xsltTag_ != null)
-        {
-            this._xsltTag_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._xsltTag_ = node;
+        this._text_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._openTag_)
-            + toString(this._textToPass_)
-            + toString(this._xsltTag_);
+            + toString(this._text_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._openTag_ == child)
+        if(this._text_ == child)
         {
-            this._openTag_ = null;
-            return;
-        }
-
-        if(this._textToPass_.remove(child))
-        {
-            return;
-        }
-
-        if(this._xsltTag_ == child)
-        {
-            this._xsltTag_ = null;
+            this._text_ = null;
             return;
         }
 
@@ -152,33 +83,9 @@ public final class APassthruTemplateContent extends PTemplateContent
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._openTag_ == oldChild)
+        if(this._text_ == oldChild)
         {
-            setOpenTag((TOpenTag) newChild);
-            return;
-        }
-
-        for(ListIterator<TTextToPass> i = this._textToPass_.listIterator(); i.hasNext();)
-        {
-            if(i.next() == oldChild)
-            {
-                if(newChild != null)
-                {
-                    i.set((TTextToPass) newChild);
-                    newChild.parent(this);
-                    oldChild.parent(null);
-                    return;
-                }
-
-                i.remove();
-                oldChild.parent(null);
-                return;
-            }
-        }
-
-        if(this._xsltTag_ == oldChild)
-        {
-            setXsltTag((TXsltTag) newChild);
+            setText((PText) newChild);
             return;
         }
 

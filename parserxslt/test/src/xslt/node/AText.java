@@ -7,7 +7,7 @@ import xslt.analysis.*;
 @SuppressWarnings("nls")
 public final class AText extends PText
 {
-    private TTextToPass _textToPass_;
+    private TWords _words_;
 
     public AText()
     {
@@ -15,10 +15,10 @@ public final class AText extends PText
     }
 
     public AText(
-        @SuppressWarnings("hiding") TTextToPass _textToPass_)
+        @SuppressWarnings("hiding") TWords _words_)
     {
         // Constructor
-        setTextToPass(_textToPass_);
+        setWords(_words_);
 
     }
 
@@ -26,7 +26,7 @@ public final class AText extends PText
     public Object clone()
     {
         return new AText(
-            cloneNode(this._textToPass_));
+            cloneNode(this._words_));
     }
 
     public void apply(Switch sw)
@@ -34,16 +34,16 @@ public final class AText extends PText
         ((Analysis) sw).caseAText(this);
     }
 
-    public TTextToPass getTextToPass()
+    public TWords getWords()
     {
-        return this._textToPass_;
+        return this._words_;
     }
 
-    public void setTextToPass(TTextToPass node)
+    public void setWords(TWords node)
     {
-        if(this._textToPass_ != null)
+        if(this._words_ != null)
         {
-            this._textToPass_.parent(null);
+            this._words_.parent(null);
         }
 
         if(node != null)
@@ -56,23 +56,23 @@ public final class AText extends PText
             node.parent(this);
         }
 
-        this._textToPass_ = node;
+        this._words_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._textToPass_);
+            + toString(this._words_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._textToPass_ == child)
+        if(this._words_ == child)
         {
-            this._textToPass_ = null;
+            this._words_ = null;
             return;
         }
 
@@ -83,9 +83,9 @@ public final class AText extends PText
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._textToPass_ == oldChild)
+        if(this._words_ == oldChild)
         {
-            setTextToPass((TTextToPass) newChild);
+            setWords((TWords) newChild);
             return;
         }
 

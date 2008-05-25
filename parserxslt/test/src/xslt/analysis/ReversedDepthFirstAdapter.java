@@ -1417,6 +1417,39 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outAApplyTemplatesTemplateContent(node);
     }
 
+    public void inAApplyTemplates2TemplateContent(AApplyTemplates2TemplateContent node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAApplyTemplates2TemplateContent(AApplyTemplates2TemplateContent node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAApplyTemplates2TemplateContent(AApplyTemplates2TemplateContent node)
+    {
+        inAApplyTemplates2TemplateContent(node);
+        if(node.getCloseTagRange() != null)
+        {
+            node.getCloseTagRange().apply(this);
+        }
+        if(node.getApplyTemplatesOptions() != null)
+        {
+            node.getApplyTemplatesOptions().apply(this);
+        }
+        if(node.getApplyTemplates() != null)
+        {
+            node.getApplyTemplates().apply(this);
+        }
+        if(node.getXsltTag() != null)
+        {
+            node.getXsltTag().apply(this);
+        }
+        outAApplyTemplates2TemplateContent(node);
+    }
+
     public void inAAttributeTemplateContent(AAttributeTemplateContent node)
     {
         defaultIn(node);
@@ -2104,21 +2137,9 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     public void caseAPassthruTemplateContent(APassthruTemplateContent node)
     {
         inAPassthruTemplateContent(node);
-        if(node.getXsltTag() != null)
+        if(node.getText() != null)
         {
-            node.getXsltTag().apply(this);
-        }
-        {
-            List<TTextToPass> copy = new ArrayList<TTextToPass>(node.getTextToPass());
-            Collections.reverse(copy);
-            for(TTextToPass e : copy)
-            {
-                e.apply(this);
-            }
-        }
-        if(node.getOpenTag() != null)
-        {
-            node.getOpenTag().apply(this);
+            node.getText().apply(this);
         }
         outAPassthruTemplateContent(node);
     }
@@ -2678,9 +2699,9 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     public void caseAText(AText node)
     {
         inAText(node);
-        if(node.getTextToPass() != null)
+        if(node.getWords() != null)
         {
-            node.getTextToPass().apply(this);
+            node.getWords().apply(this);
         }
         outAText(node);
     }
