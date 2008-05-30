@@ -2,12 +2,14 @@
 
 package xslt.node;
 
+import java.util.*;
 import xslt.analysis.*;
 
 @SuppressWarnings("nls")
 public final class APassthruTemplateContent extends PTemplateContent
 {
-    private PText _text_;
+    private TOpenTag _openTag_;
+    private final LinkedList<TTextToPass> _textToPass_ = new LinkedList<TTextToPass>();
 
     public APassthruTemplateContent()
     {
@@ -15,10 +17,13 @@ public final class APassthruTemplateContent extends PTemplateContent
     }
 
     public APassthruTemplateContent(
-        @SuppressWarnings("hiding") PText _text_)
+        @SuppressWarnings("hiding") TOpenTag _openTag_,
+        @SuppressWarnings("hiding") List<TTextToPass> _textToPass_)
     {
         // Constructor
-        setText(_text_);
+        setOpenTag(_openTag_);
+
+        setTextToPass(_textToPass_);
 
     }
 
@@ -26,7 +31,8 @@ public final class APassthruTemplateContent extends PTemplateContent
     public Object clone()
     {
         return new APassthruTemplateContent(
-            cloneNode(this._text_));
+            cloneNode(this._openTag_),
+            cloneList(this._textToPass_));
     }
 
     public void apply(Switch sw)
@@ -34,16 +40,16 @@ public final class APassthruTemplateContent extends PTemplateContent
         ((Analysis) sw).caseAPassthruTemplateContent(this);
     }
 
-    public PText getText()
+    public TOpenTag getOpenTag()
     {
-        return this._text_;
+        return this._openTag_;
     }
 
-    public void setText(PText node)
+    public void setOpenTag(TOpenTag node)
     {
-        if(this._text_ != null)
+        if(this._openTag_ != null)
         {
-            this._text_.parent(null);
+            this._openTag_.parent(null);
         }
 
         if(node != null)
@@ -56,23 +62,49 @@ public final class APassthruTemplateContent extends PTemplateContent
             node.parent(this);
         }
 
-        this._text_ = node;
+        this._openTag_ = node;
+    }
+
+    public LinkedList<TTextToPass> getTextToPass()
+    {
+        return this._textToPass_;
+    }
+
+    public void setTextToPass(List<TTextToPass> list)
+    {
+        this._textToPass_.clear();
+        this._textToPass_.addAll(list);
+        for(TTextToPass e : list)
+        {
+            if(e.parent() != null)
+            {
+                e.parent().removeChild(e);
+            }
+
+            e.parent(this);
+        }
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._text_);
+            + toString(this._openTag_)
+            + toString(this._textToPass_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._text_ == child)
+        if(this._openTag_ == child)
         {
-            this._text_ = null;
+            this._openTag_ = null;
+            return;
+        }
+
+        if(this._textToPass_.remove(child))
+        {
             return;
         }
 
@@ -83,10 +115,28 @@ public final class APassthruTemplateContent extends PTemplateContent
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._text_ == oldChild)
+        if(this._openTag_ == oldChild)
         {
-            setText((PText) newChild);
+            setOpenTag((TOpenTag) newChild);
             return;
+        }
+
+        for(ListIterator<TTextToPass> i = this._textToPass_.listIterator(); i.hasNext();)
+        {
+            if(i.next() == oldChild)
+            {
+                if(newChild != null)
+                {
+                    i.set((TTextToPass) newChild);
+                    newChild.parent(this);
+                    oldChild.parent(null);
+                    return;
+                }
+
+                i.remove();
+                oldChild.parent(null);
+                return;
+            }
         }
 
         throw new RuntimeException("Not a child.");

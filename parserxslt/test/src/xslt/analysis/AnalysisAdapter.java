@@ -439,6 +439,11 @@ public class AnalysisAdapter implements Analysis
         defaultCase(node);
     }
 
+    public void caseTTextToPass(TTextToPass node)
+    {
+        defaultCase(node);
+    }
+
     public void caseTSign(TSign node)
     {
         defaultCase(node);
@@ -965,11 +970,6 @@ public class AnalysisAdapter implements Analysis
     }
 
     public void caseTAttributeSet(TAttributeSet node)
-    {
-        defaultCase(node);
-    }
-
-    public void caseTTextToPass(TTextToPass node)
     {
         defaultCase(node);
     }

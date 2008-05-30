@@ -2127,9 +2127,16 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseAPassthruTemplateContent(APassthruTemplateContent node)
     {
         inAPassthruTemplateContent(node);
-        if(node.getText() != null)
+        if(node.getOpenTag() != null)
         {
-            node.getText().apply(this);
+            node.getOpenTag().apply(this);
+        }
+        {
+            List<TTextToPass> copy = new ArrayList<TTextToPass>(node.getTextToPass());
+            for(TTextToPass e : copy)
+            {
+                e.apply(this);
+            }
         }
         outAPassthruTemplateContent(node);
     }
