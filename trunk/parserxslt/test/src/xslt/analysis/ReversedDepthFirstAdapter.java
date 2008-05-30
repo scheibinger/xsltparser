@@ -2137,9 +2137,17 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     public void caseAPassthruTemplateContent(APassthruTemplateContent node)
     {
         inAPassthruTemplateContent(node);
-        if(node.getText() != null)
         {
-            node.getText().apply(this);
+            List<TTextToPass> copy = new ArrayList<TTextToPass>(node.getTextToPass());
+            Collections.reverse(copy);
+            for(TTextToPass e : copy)
+            {
+                e.apply(this);
+            }
+        }
+        if(node.getOpenTag() != null)
+        {
+            node.getOpenTag().apply(this);
         }
         outAPassthruTemplateContent(node);
     }

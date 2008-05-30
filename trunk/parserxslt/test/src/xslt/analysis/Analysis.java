@@ -87,6 +87,7 @@ public interface Analysis extends Switch
     void caseATestElement(ATestElement node);
     void caseAText(AText node);
 
+    void caseTTextToPass(TTextToPass node);
     void caseTSign(TSign node);
     void caseTDot(TDot node);
     void caseTComma(TComma node);
@@ -193,7 +194,6 @@ public interface Analysis extends Switch
     void caseTGroupingSeparator(TGroupingSeparator node);
     void caseTGroupingSize(TGroupingSize node);
     void caseTAttributeSet(TAttributeSet node);
-    void caseTTextToPass(TTextToPass node);
     void caseTWords(TWords node);
     void caseTDigits(TDigits node);
     void caseEOF(EOF node);
