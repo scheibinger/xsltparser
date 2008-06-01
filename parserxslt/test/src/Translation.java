@@ -5,25 +5,75 @@ import xslt.node.*;
 
 class Translation extends DepthFirstAdapter{ 
 	private String currentMatch;
-	private ArrayList<String> visitedTemplates=new ArrayList<String>();
+	private ArrayList<Object> templates=new ArrayList<Object>();
+	private int applyingTemplateIndex=0;
+	private String applyingTemplatePath="";
 	
 	public void inAMatchTemplateElement(AMatchTemplateElement node){
-		if(!visitedTemplates.contains(currentMatch))
-			currentMatch=node.getText().toString();
-		//else todo:pominiecie galezi drzewa jezeli juz bylo analizowane np. przez ApplyTemplates	
+			currentMatch+=node.getText().toString();
+			int size=templates.size();
+			applyingTemplateIndex=0;
+			search:
+			for(int i=0;i<size;i++)
+			{
+				Object element=templates.get(i);
+				if(element instanceof Template)
+				{
+					int pathSize=((Template)element).getXPath().size();
+					for(int j=1;j<pathSize;j++)
+					{
+						if(((Template)element).getXPath().get(j)==currentMatch)
+							{
+								applyingTemplateIndex=i;
+								applyingTemplatePath=((Template)element).getXPath().get(0);
+								break   search;
+							}
+					}
+				}
+			}
 	}
 	
 	public void inAPassthruTemplateContent(APassthruTemplateContent node){
-		System.out.print(node.getTextToPass()); 
+		if(currentMatch!="")
+		{
+			if(applyingTemplateIndex==0)
+				templates.add(node.getTextToPass().toString());
+			else
+			{
+				templates.add(applyingTemplateIndex,node.getTextToPass().toString());
+			}
+		}
 	}
 
 	public void inAValueOfTemplateContent(AValueOfTemplateContent node){
-		System.out.print(currentMatch+node.getText()); 	//todo:formatowanie stringow do xPath,wstawienie elementu z xml
+		if(currentMatch!="")
+		{
+			if(applyingTemplateIndex==0)
+				templates.add(currentMatch+node.getText().toString());
+			else
+			{
+				templates.add(applyingTemplateIndex,applyingTemplatePath+currentMatch+node.getText().toString());
+			}
+	//todo:formatowanie stringow do xPath,wstawienie elementu z xml
+		}
 	}
 	
+	public void inAApplyTemplates2TemplateContent(AApplyTemplates2TemplateContent node){
+		ArrayList<String> paths=new ArrayList<String>();
+		paths.add(currentMatch);
+		//todo:dodawanie dzieci z xml wystepujace pod currentMatch
+		templates.add(new Template(paths));
+	}
 	public void outAMatchTemplateElement(AMatchTemplateElement node){
-		visitedTemplates.add(currentMatch);
 		currentMatch="";
+	}
+	public void outAFooter(AFooter node){
+		int size=templates.size();
+		for(int i=0;i<size;i++)
+		{
+			if(templates.get(i) instanceof String)
+				System.out.println(templates.get(i).toString());
+		}
 	}
 }
 /*
