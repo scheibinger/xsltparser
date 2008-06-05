@@ -4,6 +4,7 @@ import xslt.node.*;
 import java.io.*;
 
 public class test { 
+	private static Translation translation;
 	public static void main(String[] arguments) 
 	{ 
 		try {
@@ -12,7 +13,9 @@ public class test {
 
 // Parse the input. 
 		Start tree = p.parse();
-		tree.apply(new Translation());
+		translation=new Translation();
+		tree.apply(translation);
+		translation.getOutput();
 		//System.out.println(tree.toString());
 		}
 // Apply the translation. 
