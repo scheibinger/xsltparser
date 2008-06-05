@@ -1,13 +1,20 @@
 //todo: sposob na przejscie do wybranej galezi przy ApplyTemplates
+//wyczaic jak dobrac sie do zlozonych produkcji
 import java.util.ArrayList;
+import java.util.LinkedList;
+
 import xslt.analysis.*;
 import xslt.node.*;
 
 class Translation extends DepthFirstAdapter{ 
-	private String currentMatch;
+	private String currentMatch="";
 	private ArrayList<Object> templates=new ArrayList<Object>();
 	private int applyingTemplateIndex=0;
 	private String applyingTemplatePath="";
+	private String text="";
+	private LinkedList textTmp;
+	
+	private String applyTemplatesSelect="";
 	
 	public void inAMatchTemplateElement(AMatchTemplateElement node){
 			currentMatch+=node.getText().toString();
@@ -36,11 +43,24 @@ class Translation extends DepthFirstAdapter{
 	public void inAPassthruTemplateContent(APassthruTemplateContent node){
 		if(currentMatch!="")
 		{
-			if(applyingTemplateIndex==0)
-				templates.add(node.getTextToPass().toString());
+			String tmp;
+			text="<";
+			textTmp=node.getTextToPass();
+			int size=textTmp.size();
+			for(int i=0;i<size;i++)
+			{
+				tmp=textTmp.pop().toString();
+				if(tmp.charAt(0)!=' '&&(text.charAt(text.length()-1))==' ')
+					text=text.substring(0,text.length()-1);
+				text+=tmp;
+			}
+			if(applyingTemplateIndex==0)	
+				//templates.add(node.getTextToPass().toString());
+				templates.add(text);
 			else
 			{
-				templates.add(applyingTemplateIndex,node.getTextToPass().toString());
+				//templates.add(applyingTemplateIndex,node.getTextToPass().toString());
+				templates.add(applyingTemplateIndex,text);
 			}
 		}
 	}
@@ -58,16 +78,25 @@ class Translation extends DepthFirstAdapter{
 		}
 	}
 	
-	public void inAApplyTemplates2TemplateContent(AApplyTemplates2TemplateContent node){
+	public void outAApplyTemplates2TemplateContent(AApplyTemplates2TemplateContent node){
 		ArrayList<String> paths=new ArrayList<String>();
 		paths.add(currentMatch);
+		if(applyTemplatesSelect!="")
+		{
+			paths.add(applyTemplatesSelect);
+			templates.add(new Template(paths));
+		}
 		//todo:dodawanie dzieci z xml wystepujace pod currentMatch
-		templates.add(new Template(paths));
+		applyTemplatesSelect="";
 	}
+	public void caseASelectApplyTemplatesOptions(ASelectApplyTemplatesOptions node){
+		applyTemplatesSelect=node.getText().toString();
+	}
+	
 	public void outAMatchTemplateElement(AMatchTemplateElement node){
 		currentMatch="";
 	}
-	public void outAFooter(AFooter node){
+	public void getOutput(){
 		int size=templates.size();
 		for(int i=0;i<size;i++)
 		{
