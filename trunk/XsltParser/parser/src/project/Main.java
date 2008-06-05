@@ -25,8 +25,10 @@ public class Main extends javax.swing.JFrame {
     private Translation translation;
     FileInputStream file;
     BufferedReader buffer;
+    Lexer lexer;
     /** Creates new form NewJFrame */
     public Main() {
+        
         initComponents();
     }
     
@@ -45,6 +47,7 @@ public class Main extends javax.swing.JFrame {
         fileName = new javax.swing.JTextField();
         addFile = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -85,7 +88,7 @@ public class Main extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -99,6 +102,9 @@ public class Main extends javax.swing.JFrame {
                         .addGap(353, 353, 353)
                         .addComponent(jButton1)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1182, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,7 +122,8 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE))
         );
 
         pack();
@@ -134,35 +141,39 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
         name=fileName.getText();
         String linia = "";
+        int line=1;
         contentXslt="";
-try{
-FileReader file = new FileReader(name);
-BufferedReader bfr = new BufferedReader(file);
-while((linia = bfr.readLine()) != null){
-contentXslt+=linia+'\n';
-//System.out.println(linia);
-}
-} catch( IOException ex ){
-System.out.println("Błąd przy operacji na pliku: "+ex);
-}
+        try{
+            FileReader file = new FileReader(name);
+            BufferedReader bfr = new BufferedReader(file);
+            while((linia = bfr.readLine()) != null){
+                contentXslt+=line+":    "+linia+'\n';
+                line++;
+            }
+        } catch( IOException ex ){
+            System.out.println("Błąd przy operacji na pliku: "+ex);
+        }
          System.out.println(contentXslt);
-jTextArea1.insert(contentXslt,0);
+        jTextArea1.setText(contentXslt);
     }//GEN-LAST:event_addFileMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        try {
 // Create a Parser instance. 
-		Parser p =new Parser(new Lexer(new PushbackReader(new InputStreamReader(new FileInputStream ("test.xslt")), 1024)));
-
+           lexer=new Lexer(new PushbackReader(new InputStreamReader(new FileInputStream ("test.xslt")), 1024));
+                
+           Parser p =new Parser(lexer);
+                
 // Parse the input. 
 		Start tree = p.parse();
 		translation=new Translation();
 		tree.apply(translation);
-		jTextArea2.insert(translation.getOutput(),0);
+		jTextArea2.setText(translation.getOutput());
 		//System.out.println(tree.toString());
+                
 		}
 // Apply the translation. 
-		 catch(Exception e) { System.out.println(e.getMessage());
+		 catch(Exception e) { jLabel1.setText(e.getMessage());
                  }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -181,6 +192,7 @@ jTextArea1.insert(contentXslt,0);
     private javax.swing.JButton addFile;
     private javax.swing.JTextField fileName;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;

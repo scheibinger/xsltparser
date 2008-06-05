@@ -4,26 +4,12 @@
     doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
     doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"/>
   <xsl:template match="ksiazka">
-    <html>
-      <head> <title>Ksiazka <xsl:value-of select="./id/tytul"/></title> </head>
-      <body>
-         <xsl:apply-templates/>
-      </body>
-    </html>
-  </xsl:template>
+    <html> <head> <title>Ksiazka <xsl:value-of select="./id/tytul"/></title> </head><body><xsl:apply-templates/>
+</body></html></xsl:template>
   <xsl:template match="id">
-    <h3>Dane identyfikacyjne ksiazki</h3>
-    Tytul: <xsl:value-of select="tytul"/><br/>
-    ISBN: <xsl:value-of select="isbn"/><br/>
-    Autor: <xsl:value-of select="autor"/><br/>
-  </xsl:template>
+    <h3>Dane identyfikacyjne ksiazki</h3>Tytul: <xsl:value-of select="tytul"/><br/>ISBN: <xsl:value-of select="isbn"/><br/>Autor: <xsl:value-of select="autor"/><br/></xsl:template>
   <xsl:template match="spisTresci">
-    <h3>Spis tresci</h3>
-    <table>
-      <xsl:apply-templates />
-    </table>
-  </xsl:template>
-  <xsl:template match="r">
-    <tr><td><xsl:value-of select="."/></td></tr>
-  </xsl:template>
-</xsl:stylesheet>
+    <h3>Spis tresci</h3><table><xsl:apply-templates />
+    </table></xsl:template>
+  <xsl:template match="r"><tr><td><xsl:value-of select="."/></td></tr></xsl:template>
+</xsl:st ylesheet>
