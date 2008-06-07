@@ -12,4 +12,4 @@
     <h3>Spis tresci</h3><table><xsl:apply-templates />
     </table></xsl:template>
   <xsl:template match="r"><tr><td><xsl:value-of select="."/></td></tr></xsl:template>
-</xsl:st ylesheet>
+</xsl:stylesheet>
