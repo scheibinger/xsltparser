@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PushbackReader;
@@ -175,7 +176,10 @@ public class Main extends javax.swing.JFrame {
 		tree.apply(translation);
 		jTextArea2.setText(translation.getOutput());
 		//System.out.println(tree.toString());
-                
+                File html=new File(name+".html");
+                FileWriter result=new FileWriter(html);
+                result.write(jTextArea2.getText());
+                result.close();
 		}
 // Apply the translation. 
 		 catch(Exception e) { jLabel1.setText(e.getMessage());
