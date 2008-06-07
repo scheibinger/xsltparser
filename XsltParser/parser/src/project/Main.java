@@ -7,11 +7,13 @@
 package project;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PushbackReader;
+import javax.swing.JFileChooser;
 import xslt.lexer.Lexer;
 import xslt.node.Start;
 import xslt.parser.Parser;
@@ -23,12 +25,16 @@ import xslt.parser.Parser;
 public class Main extends javax.swing.JFrame {
     String contentXslt,name;
     private Translation translation;
-    FileInputStream file;
+    //FileInputStream file;
     BufferedReader buffer;
     Lexer lexer;
+    final JFileChooser fc;
     /** Creates new form NewJFrame */
     public Main() {
-        
+
+     fc= new JFileChooser();
+
+    
         initComponents();
     }
     
@@ -53,6 +59,7 @@ public class Main extends javax.swing.JFrame {
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
+        jTextArea1.setEnabled(false);
         jScrollPane1.setViewportView(jTextArea1);
 
         jTextArea2.setColumns(20);
@@ -89,41 +96,34 @@ public class Main extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 573, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(fileName, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(addFile)
-                        .addGap(353, 353, 353)
-                        .addComponent(jButton1)))
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 563, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 591, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1182, Short.MAX_VALUE))
+                .addComponent(fileName, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(addFile)
+                .addGap(98, 98, 98)
+                .addComponent(jButton1)
+                .addGap(117, 117, 117)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(349, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(addFile)
-                            .addComponent(fileName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(29, 29, 29))
-                    .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE))
+                        .addComponent(addFile)
+                        .addComponent(fileName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -139,13 +139,17 @@ public class Main extends javax.swing.JFrame {
 
     private void addFileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addFileMouseClicked
         // TODO add your handling code here:
-        name=fileName.getText();
-        String linia = "";
-        int line=1;
-        contentXslt="";
-        try{
-            FileReader file = new FileReader(name);
-            BufferedReader bfr = new BufferedReader(file);
+        int returnVal = fc.showOpenDialog(jLabel1);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fc.getSelectedFile();
+            name=file.getAbsolutePath();
+            fileName.setText(name);
+            String linia = "";
+            int line=1;
+            contentXslt="";
+            try{
+            FileReader file2 = new FileReader(file);
+            BufferedReader bfr = new BufferedReader(file2);
             while((linia = bfr.readLine()) != null){
                 contentXslt+=line+":    "+linia+'\n';
                 line++;
@@ -155,15 +159,16 @@ public class Main extends javax.swing.JFrame {
         }
          System.out.println(contentXslt);
         jTextArea1.setText(contentXslt);
+        }
     }//GEN-LAST:event_addFileMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        try {
 // Create a Parser instance. 
-           lexer=new Lexer(new PushbackReader(new InputStreamReader(new FileInputStream ("test.xslt")), 1024));
+           lexer=new Lexer(new PushbackReader(new InputStreamReader(new FileInputStream (name)), 1024));
                 
            Parser p =new Parser(lexer);
-                
+       
 // Parse the input. 
 		Start tree = p.parse();
 		translation=new Translation();

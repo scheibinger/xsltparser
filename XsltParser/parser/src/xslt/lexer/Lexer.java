@@ -1770,7 +1770,7 @@ public class Lexer
                     if(this.text.length() > 0)
                     {
                         throw new LexerException("[" + (start_line + 1) + "," + (start_pos + 1) + "]" +
-                            " Unknown token: " + this.text);
+                            "Nieznany token: " + this.text);
                     }
 
                     @SuppressWarnings("hiding") EOF token = new EOF(
