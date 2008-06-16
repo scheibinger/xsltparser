@@ -10,6 +10,7 @@ public class Lexer
 {
     protected Token token;
     protected State state = State.NORMAL;
+
     private PushbackReader in;
     private int line;
     private int pos;
@@ -22,6 +23,7 @@ public class Lexer
     {
         // Do nothing
     }
+
     public Lexer(@SuppressWarnings("hiding") PushbackReader in)
     {
         this.in = in;
@@ -1769,8 +1771,9 @@ public class Lexer
                 {
                     if(this.text.length() > 0)
                     {
-                        throw new LexerException("[" + (start_line + 1) + "," + (start_pos + 1) + "]" +
-                            "Nieznany token: " + this.text);
+                        throw new LexerException(
+                            "[" + (start_line + 1) + "," + (start_pos + 1) + "]" +
+                            " Unknown token: " + this.text);
                     }
 
                     @SuppressWarnings("hiding") EOF token = new EOF(
