@@ -8,6 +8,7 @@ import java.util.*;
 import xslt.analysis.*;
 import xslt.node.*;
 
+
 class Translation extends DepthFirstAdapter {
 
     private String currentMatch = "";

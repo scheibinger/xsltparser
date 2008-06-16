@@ -30,7 +30,7 @@ import xslt.parser.Parser;
  * @author  Administrator
  */
 public class Main extends javax.swing.JFrame {
-    String contentXslt,name;
+    String contentXslt,contentXML,name;
     private Translation translation;
     //FileInputStream file;
     BufferedReader buffer;
@@ -52,118 +52,168 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
-        fileName = new javax.swing.JTextField();
-        addFile = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jEditorPane1 = new javax.swing.JEditorPane();
+        jScrollPaneXSLPreview = new javax.swing.JScrollPane();
+        jTextAreaXSLPreview = new javax.swing.JTextArea();
+        jScrollPaneHTMLCodePreview = new javax.swing.JScrollPane();
+        jTextAreaHTMLCodePreview = new javax.swing.JTextArea();
+        jTextFieldXSLfileName = new javax.swing.JTextField();
+        jButtonChooseXSLFile = new javax.swing.JButton();
+        jButtonGenerateHTML = new javax.swing.JButton();
+        jLabelErrorReport = new javax.swing.JLabel();
+        jScrollPaneHTMLPreview = new javax.swing.JScrollPane();
+        jEditorPaneHTMLPreview = new javax.swing.JEditorPane();
+        jLabelInfoHtmlPreview = new javax.swing.JLabel();
+        jLabelInfoHTMLCodePreview = new javax.swing.JLabel();
+        jLabelInfoErrorReport = new javax.swing.JLabel();
+        jTextFieldXMLFileName = new javax.swing.JTextField();
+        jButtonChooseXMLFile = new javax.swing.JButton();
+        jScrollPaneXMLPreview = new javax.swing.JScrollPane();
+        jEditorPaneXMLPreview = new javax.swing.JEditorPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Procesor XSLT");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setEnabled(false);
-        jScrollPane1.setViewportView(jTextArea1);
+        jTextAreaXSLPreview.setColumns(20);
+        jTextAreaXSLPreview.setRows(5);
+        jTextAreaXSLPreview.setEnabled(false);
+        jScrollPaneXSLPreview.setViewportView(jTextAreaXSLPreview);
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
+        jTextAreaHTMLCodePreview.setColumns(20);
+        jTextAreaHTMLCodePreview.setRows(5);
+        jScrollPaneHTMLCodePreview.setViewportView(jTextAreaHTMLCodePreview);
 
-        fileName.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldXSLfileName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fileNameActionPerformed(evt);
+                jTextFieldXSLfileNameActionPerformed(evt);
             }
         });
 
-        addFile.setText("Dodaj plik");
-        addFile.addMouseListener(new java.awt.event.MouseAdapter() {
+        jButtonChooseXSLFile.setText("Wybierz plik XSL");
+        jButtonChooseXSLFile.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                addFileMouseClicked(evt);
+                jButtonChooseXSLFileMouseClicked(evt);
             }
         });
-        addFile.addActionListener(new java.awt.event.ActionListener() {
+        jButtonChooseXSLFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addFileActionPerformed(evt);
+                jButtonChooseXSLFileActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Transform");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonGenerateHTML.setText("Generuj plik html");
+        jButtonGenerateHTML.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonGenerateHTMLActionPerformed(evt);
             }
         });
 
-        jEditorPane1.setContentType("text/html");
-        jScrollPane3.setViewportView(jEditorPane1);
+        jEditorPaneHTMLPreview.setContentType("text/html");
+        jScrollPaneHTMLPreview.setViewportView(jEditorPaneHTMLPreview);
+
+        jLabelInfoHtmlPreview.setText("Podgląd HTML");
+
+        jLabelInfoHTMLCodePreview.setText("Podgląd kodu html");
+
+        jLabelInfoErrorReport.setText("Informacje o błędach:");
+
+        jButtonChooseXMLFile.setText("Wybierz plik XML z danymi");
+        jButtonChooseXMLFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonChooseXMLFileActionPerformed(evt);
+            }
+        });
+
+        jScrollPaneXMLPreview.setViewportView(jEditorPaneXMLPreview);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelInfoErrorReport)
+                    .addComponent(jLabelErrorReport, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
+                    .addComponent(jScrollPaneXSLPreview, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jTextFieldXMLFileName)
+                            .addComponent(jTextFieldXSLfileName, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonChooseXMLFile, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButtonChooseXSLFile, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE))))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonGenerateHTML)
+                    .addComponent(jScrollPaneXMLPreview, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(fileName, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(addFile)
-                        .addGap(98, 98, 98)
-                        .addComponent(jButton1)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(117, 117, 117)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(jLabelInfoHTMLCodePreview)
+                        .addContainerGap())
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jScrollPaneHTMLPreview, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
+                            .addContainerGap())
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPaneHTMLCodePreview, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
+                            .addComponent(jLabelInfoHtmlPreview)))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton1)
-                        .addComponent(addFile)
-                        .addComponent(fileName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButtonGenerateHTML)
+                        .addComponent(jTextFieldXSLfileName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonChooseXSLFile))
+                    .addComponent(jLabelInfoHTMLCodePreview))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPaneHTMLCodePreview, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelInfoHtmlPreview)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPaneHTMLPreview, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPaneXMLPreview, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jButtonChooseXMLFile)
+                                    .addComponent(jTextFieldXMLFileName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPaneXSLPreview, javax.swing.GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabelInfoErrorReport)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabelErrorReport, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void fileNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileNameActionPerformed
+    private void jTextFieldXSLfileNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldXSLfileNameActionPerformed
         // TODO add your handling code here:
-}//GEN-LAST:event_fileNameActionPerformed
+}//GEN-LAST:event_jTextFieldXSLfileNameActionPerformed
 
-    private void addFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFileActionPerformed
+    private void jButtonChooseXSLFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChooseXSLFileActionPerformed
         // TODO add your handling code here:
-}//GEN-LAST:event_addFileActionPerformed
+}//GEN-LAST:event_jButtonChooseXSLFileActionPerformed
 
-    private void addFileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addFileMouseClicked
+    private void jButtonChooseXSLFileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonChooseXSLFileMouseClicked
         // TODO add your handling code here:
-        int returnVal = fc.showOpenDialog(jLabel1);
+        int returnVal = fc.showOpenDialog(jLabelErrorReport);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fc.getSelectedFile();
             name=file.getAbsolutePath();
-            fileName.setText(name);
+            jTextFieldXSLfileName.setText(name);
             String linia = "";
             int line=1;
             contentXslt="";
@@ -178,11 +228,11 @@ public class Main extends javax.swing.JFrame {
             System.out.println("Błąd przy operacji na pliku: "+ex);
         }
          System.out.println(contentXslt);
-        jTextArea1.setText(contentXslt);
+        jTextAreaXSLPreview.setText(contentXslt);
         }
-    }//GEN-LAST:event_addFileMouseClicked
+}//GEN-LAST:event_jButtonChooseXSLFileMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonGenerateHTMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGenerateHTMLActionPerformed
        try {
 // Create a Parser instance.
            
@@ -194,23 +244,48 @@ public class Main extends javax.swing.JFrame {
 		Start tree = p.parse();
 		translation=new Translation();
 		tree.apply(translation);
-		jTextArea2.setText(translation.getOutput());
-                jLabel1.setText(translation.getErrors());
+		jTextAreaHTMLCodePreview.setText(translation.getOutput());
+                jLabelErrorReport.setText(translation.getErrors());
 		//System.out.println(tree.toString());
                 File html=new File(name+".html");
                 FileWriter result=new FileWriter(html);
-                jLabel1.setText(translation.getErrors());
-                if(jLabel1.getText().contentEquals(translation.getErrors())){
-                    result.write(jTextArea2.getText());
-                    jEditorPane1.setText(jTextArea2.getText());
+                jLabelErrorReport.setText(translation.getErrors());
+                if(jLabelErrorReport.getText().contentEquals(translation.getErrors())){
+                    result.write(jTextAreaHTMLCodePreview.getText());
+                    jEditorPaneHTMLPreview.setText(jTextAreaHTMLCodePreview.getText());
                 }
                 result.close();
                 
 		}
 // Apply the translation. 
-		 catch(Exception e) { jLabel1.setText(e.getMessage());
+		 catch(Exception e) { jLabelErrorReport.setText(e.getMessage());
                  }
-    }//GEN-LAST:event_jButton1ActionPerformed
+}//GEN-LAST:event_jButtonGenerateHTMLActionPerformed
+
+    private void jButtonChooseXMLFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChooseXMLFileActionPerformed
+        // TODO add your handling code here:
+        int returnVal = fc.showOpenDialog(jLabelErrorReport);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fc.getSelectedFile();
+            name=file.getAbsolutePath();
+            jTextFieldXMLFileName.setText(name);
+            String linia = "";
+            int line=1;
+            contentXML="";
+            try{
+            FileReader file2 = new FileReader(file);
+            BufferedReader bfr = new BufferedReader(file2);
+            while((linia = bfr.readLine()) != null){
+                contentXML+=line+":    "+linia+'\n';
+                line++;
+            }
+        } catch( IOException ex ){
+            System.out.println("Błąd przy operacji na pliku: "+ex);
+        }
+         System.out.println(contentXML);
+        jEditorPaneXMLPreview.setText(contentXML);
+        }
+    }//GEN-LAST:event_jButtonChooseXMLFileActionPerformed
 
     /**
      * @param args the command line arguments
@@ -224,16 +299,23 @@ public class Main extends javax.swing.JFrame {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addFile;
-    private javax.swing.JTextField fileName;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JEditorPane jEditorPane1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
+    private javax.swing.JButton jButtonChooseXMLFile;
+    private javax.swing.JButton jButtonChooseXSLFile;
+    private javax.swing.JButton jButtonGenerateHTML;
+    private javax.swing.JEditorPane jEditorPaneHTMLPreview;
+    private javax.swing.JEditorPane jEditorPaneXMLPreview;
+    private javax.swing.JLabel jLabelErrorReport;
+    private javax.swing.JLabel jLabelInfoErrorReport;
+    private javax.swing.JLabel jLabelInfoHTMLCodePreview;
+    private javax.swing.JLabel jLabelInfoHtmlPreview;
+    private javax.swing.JScrollPane jScrollPaneHTMLCodePreview;
+    private javax.swing.JScrollPane jScrollPaneHTMLPreview;
+    private javax.swing.JScrollPane jScrollPaneXMLPreview;
+    private javax.swing.JScrollPane jScrollPaneXSLPreview;
+    private javax.swing.JTextArea jTextAreaHTMLCodePreview;
+    private javax.swing.JTextArea jTextAreaXSLPreview;
+    private javax.swing.JTextField jTextFieldXMLFileName;
+    private javax.swing.JTextField jTextFieldXSLfileName;
     // End of variables declaration//GEN-END:variables
     
 }
