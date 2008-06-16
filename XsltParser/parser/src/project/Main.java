@@ -175,11 +175,15 @@ public class Main extends javax.swing.JFrame {
 		translation=new Translation();
 		tree.apply(translation);
 		jTextArea2.setText(translation.getOutput());
+                jLabel1.setText(translation.getErrors());
 		//System.out.println(tree.toString());
                 File html=new File(name+".html");
                 FileWriter result=new FileWriter(html);
-                result.write(jTextArea2.getText());
+                jLabel1.setText(translation.getErrors());
+                if(jLabel1.getText().contentEquals(translation.getErrors()))
+                    result.write(jTextArea2.getText());
                 result.close();
+                
 		}
 // Apply the translation. 
 		 catch(Exception e) { jLabel1.setText(e.getMessage());
