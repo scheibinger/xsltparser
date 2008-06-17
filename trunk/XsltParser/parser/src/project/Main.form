@@ -47,30 +47,20 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="jLabelInfoHTMLCodePreview" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="103" alignment="0" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="jScrollPaneHTMLPreview" pref="362" max="32767" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="jScrollPaneHTMLCodePreview" min="-2" pref="362" max="-2" attributes="1"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="jLabelInfoHtmlPreview" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                  <Component id="jLabelInfoHTMLCodePreview" min="-2" max="-2" attributes="0"/>
+                  <Component id="jScrollPaneHTMLPreview" pref="362" max="32767" attributes="0"/>
+                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                      <Component id="jScrollPaneHTMLCodePreview" min="-2" pref="362" max="-2" attributes="1"/>
+                      <Component id="jLabelInfoHtmlPreview" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
+          <Group type="102" alignment="1" max="-2" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -81,7 +71,7 @@
                   <Component id="jLabelInfoHTMLCodePreview" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="jScrollPaneHTMLCodePreview" min="-2" pref="279" max="-2" attributes="1"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -89,9 +79,9 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPaneHTMLPreview" min="-2" pref="312" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jScrollPaneXMLPreview" alignment="0" pref="446" max="32767" attributes="0"/>
+                  <Group type="102" alignment="1" max="-2" attributes="0">
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="jScrollPaneXMLPreview" alignment="0" min="-2" pref="446" max="-2" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jButtonChooseXMLFile" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -145,6 +135,11 @@
       </SubComponents>
     </Container>
     <Component class="javax.swing.JTextField" name="jTextFieldXSLfileName">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="10" style="0"/>
+        </Property>
+      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldXSLfileNameActionPerformed"/>
       </Events>
@@ -198,6 +193,11 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldXMLFileName">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="10" style="0"/>
+        </Property>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonChooseXMLFile">
       <Properties>
