@@ -5,8 +5,18 @@ package project;
 
 import java.util.*;
 
+
 import xslt.analysis.*;
 import xslt.node.*;
+import java.io.IOException;
+import javax.xml.XMLConstants;
+import javax.xml.namespace.QName;
+import javax.xml.parsers.*;
+import javax.xml.xpath.*;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+
+
 
 
 class Translation extends DepthFirstAdapter {
@@ -35,6 +45,9 @@ class Translation extends DepthFirstAdapter {
     private Boolean choose = true;
     private Boolean alreadyChoosed = false;
     
+    private Document xmlDocument;
+    private XPath xPath;
+
     public void caseAVariableInnerElement(AVariableInnerElement node){
         variables.put(node.getParamName().toString(),node.getParamSelect().toString());
     }
@@ -353,4 +366,31 @@ class Translation extends DepthFirstAdapter {
     public String getErrors(){
         return errors;
     }
+    public void prepareXml(String xml)
+    {
+        try {
+            xmlDocument = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(xml);            
+            xPath =  XPathFactory.newInstance().newXPath();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (SAXException ex) {
+            ex.printStackTrace();
+        } catch (ParserConfigurationException ex) {
+            ex.printStackTrace();
+        }  
+    }
+    
+    public Object read(String expression, 
+			QName returnType){
+        try {
+            XPathExpression xPathExpression = 
+			xPath.compile(expression);
+            return xPathExpression.evaluate
+			(xmlDocument, returnType);
+        } catch (XPathExpressionException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
 }

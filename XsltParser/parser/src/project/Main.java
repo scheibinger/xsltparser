@@ -243,6 +243,7 @@ public class Main extends javax.swing.JFrame {
 // Parse the input. 
 		Start tree = p.parse();
 		translation=new Translation();
+                translation.prepareXml(contentXML);
 		tree.apply(translation);
 		jTextAreaHTMLCodePreview.setText(translation.getOutput());
                 jLabelErrorReport.setText(translation.getErrors());
