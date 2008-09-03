@@ -5,7 +5,8 @@ package project;
 
 import java.util.*;
 
-
+import java.io.File;
+import java.util.regex.*;
 import xslt.analysis.*;
 import xslt.node.*;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import javax.xml.namespace.QName;
 import javax.xml.parsers.*;
 import javax.xml.xpath.*;
 import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 
@@ -61,7 +63,7 @@ class Translation extends DepthFirstAdapter {
             if (element instanceof Template) {
                 int pathSize = ((Template) element).getXPath().size();
                 for (int j = 1; j < pathSize; j++) {
-                    if (((Template) element).getXPath().get(j).contentEquals(currentMatch)) {
+                    if (((Template) element).getXPath().get(j).contentEquals(currentMatch.trim().replaceAll("\"",""))) {
                         applyingTemplateIndex = i;
                         applyingTemplatePath = ((Template) element).getXPath().get(0);
                         break search;
@@ -246,10 +248,13 @@ class Translation extends DepthFirstAdapter {
                 attributes+=currentMatch + node.getText().toString()+"\"";
             }
             else{
-            if (applyingTemplateIndex == 0) {
-                templates.add(currentMatch + node.getText().toString());
+                String path = currentMatch.trim().replaceAll("\"","")+"/"+node.getText().toString().trim().replaceAll("\"","");
+            if (applyingTemplateIndex == 0) { 
+                
+                templates.add(readPath(path.replaceAll("//","/"),XPathConstants.STRING));
             } else {
-                templates.add(applyingTemplateIndex, applyingTemplatePath + currentMatch + node.getText().toString());
+                    path =applyingTemplatePath.trim().replaceAll("\"","")+"/" + path;
+                templates.add(applyingTemplateIndex,readPath(path.replaceAll("//","/"),XPathConstants.STRING));
                 applyingTemplateIndex++;
             }
             }
@@ -267,6 +272,11 @@ class Translation extends DepthFirstAdapter {
                 templates.add(new Template(paths));
             }
             //todo:dodawanie dzieci z xml wystepujace pod currentMatch
+            NodeList list = (NodeList)readPath((currentMatch.trim().replaceAll("\"","")+"/*"),XPathConstants.NODESET);
+            
+            for(int i = 0;i < list.getLength();i++)
+                paths.add(list.item(i).getNodeName());
+            templates.add(new Template(paths));
             applyTemplatesSelect = "";
         }
     }
@@ -366,7 +376,7 @@ class Translation extends DepthFirstAdapter {
     public String getErrors(){
         return errors;
     }
-    public void prepareXml(String xml)
+    public void prepareXml(File xml)
     {
         try {
             xmlDocument = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(xml);            
@@ -380,8 +390,9 @@ class Translation extends DepthFirstAdapter {
         }  
     }
     
-    public Object read(String expression, 
-			QName returnType){
+    public Object readPath(String expression, 
+			QName returnType)
+    {
         try {
             XPathExpression xPathExpression = 
 			xPath.compile(expression);
@@ -392,5 +403,6 @@ class Translation extends DepthFirstAdapter {
             return null;
         }
     }
+
 
 }

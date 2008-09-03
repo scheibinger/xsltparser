@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksiazka>
+  <id>
+    <tytul>Pobawmy sie w webmasterow</tytul>
+    <isbn>123456789</isbn>
+    <autor>Jeszcze nieznany</autor>
+  </id>
+  <spisTresci>
+    <r>Rozdzial 1</r>
+    <r>Rozdzial 2</r>
+    <r>Rozdzial 3</r>
+  </spisTresci>
+</ksiazka>
