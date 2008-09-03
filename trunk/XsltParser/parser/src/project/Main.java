@@ -32,6 +32,7 @@ import xslt.parser.Parser;
 public class Main extends javax.swing.JFrame {
     String contentXslt,contentXML,XsltFilePath,XmlFilePath;
     private Translation translation;
+    private File xmlFile;
     //FileInputStream file;
     BufferedReader buffer;
     Lexer lexer;
@@ -243,7 +244,7 @@ public class Main extends javax.swing.JFrame {
 // Parse the input. 
 		Start tree = p.parse();
 		translation=new Translation();
-                translation.prepareXml(contentXML);
+                translation.prepareXml(xmlFile);
 		tree.apply(translation);
 		jTextAreaHTMLCodePreview.setText(translation.getOutput());
                 jLabelErrorReport.setText(translation.getErrors());
@@ -267,14 +268,14 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
         int returnVal = XMLfileChoser.showOpenDialog(jLabelErrorReport);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = XMLfileChoser.getSelectedFile();
-            XmlFilePath=file.getAbsolutePath();
+            xmlFile = XMLfileChoser.getSelectedFile();
+            XmlFilePath=xmlFile.getAbsolutePath();
             jTextFieldXMLFileName.setText(XmlFilePath);
             String linia = "";
             int line=1;
             contentXML="";
             try{
-            FileReader file2 = new FileReader(file);
+            FileReader file2 = new FileReader(xmlFile);
             BufferedReader bfr = new BufferedReader(file2);
             while((linia = bfr.readLine()) != null){
                 contentXML+=line+":    "+linia+'\n';
