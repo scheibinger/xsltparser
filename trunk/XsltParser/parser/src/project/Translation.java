@@ -65,7 +65,8 @@ class Translation extends DepthFirstAdapter {
                 for (int j = 1; j < pathSize; j++) {
                     if (((Template) element).getXPath().get(j).contentEquals(currentMatch.trim().replaceAll("\"",""))) {
                         applyingTemplateIndex = i;
-                        applyingTemplatePath = ((Template) element).getXPath().get(0);
+                        //applyingTemplatePath = ((Template) element).getXPath().get(0);
+                        currentMatch = ((Template) element).getXPath().get(0).trim().replaceAll("\"","")+ "/"+currentMatch.trim().replaceAll("\"","");
                         break search;
                     }
                 }
@@ -253,7 +254,7 @@ class Translation extends DepthFirstAdapter {
                 
                 templates.add(readPath(path.replaceAll("//","/"),XPathConstants.STRING));
             } else {
-                    path =applyingTemplatePath.trim().replaceAll("\"","")+"/" + path;
+                    //path =applyingTemplatePath.trim().replaceAll("\"","")+"/" + path;
                 templates.add(applyingTemplateIndex,readPath(path.replaceAll("//","/"),XPathConstants.STRING));
                 applyingTemplateIndex++;
             }
@@ -276,7 +277,10 @@ class Translation extends DepthFirstAdapter {
             
             for(int i = 0;i < list.getLength();i++)
                 paths.add(list.item(i).getNodeName());
-            templates.add(new Template(paths));
+            if(applyingTemplateIndex==0)
+                templates.add(new Template(paths));
+            else
+                templates.add(applyingTemplateIndex,new Template(paths));
             applyTemplatesSelect = "";
         }
     }
