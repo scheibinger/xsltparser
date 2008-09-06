@@ -268,11 +268,19 @@ class Translation extends DepthFirstAdapter {
         if (ifResult) {
             ArrayList<String> paths = new ArrayList<String>();
             paths.add(currentMatch);
-            if (!applyTemplatesSelect.contentEquals("")) {
-                paths.add(applyTemplatesSelect);
-                templates.add(new Template(paths));
+            if (!applyTemplatesSelect.contentEquals("")) 
+            {
+                paths.add(applyTemplatesSelect.trim().replaceAll("\"",""));
+                if(applyingTemplateIndex==0)
+                    templates.add(new Template(paths));
+                 else
+                {
+                    templates.add(applyingTemplateIndex,new Template(paths));
+                    applyingTemplateIndex++;
+                }
             }
-            //todo:dodawanie dzieci z xml wystepujace pod currentMatch
+            else
+            {
             NodeList list = (NodeList)readPath((currentMatch.trim().replaceAll("\"","")+"/*"),XPathConstants.NODESET);
             
             for(int i = 0;i < list.getLength();i++)
@@ -283,6 +291,7 @@ class Translation extends DepthFirstAdapter {
             {
                 templates.add(applyingTemplateIndex,new Template(paths));
                 applyingTemplateIndex++;
+            }
             }
             applyTemplatesSelect = "";
         }
