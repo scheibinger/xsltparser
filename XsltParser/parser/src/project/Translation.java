@@ -280,7 +280,10 @@ class Translation extends DepthFirstAdapter {
             if(applyingTemplateIndex==0)
                 templates.add(new Template(paths));
             else
+            {
                 templates.add(applyingTemplateIndex,new Template(paths));
+                applyingTemplateIndex++;
+            }
             applyTemplatesSelect = "";
         }
     }
