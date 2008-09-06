@@ -35,6 +35,7 @@ class Translation extends DepthFirstAdapter {
     private String forEachPath;
     private int forEachElements=0;
     private ArrayList<String> forEachContent= new ArrayList<String>();
+
     private ArrayList<Boolean> forEachIf = new ArrayList<Boolean>();
     private HashMap variables=new HashMap();
     private ArrayList<String> currentVariables=new ArrayList<String>();
@@ -233,12 +234,14 @@ class Translation extends DepthFirstAdapter {
                 else
                 for(int i=0;i<forEachElements;i++)
                 {
+                    String path=forEachPath +"["+(i+1)+"]"+"/"+ node.getText().toString().trim().replaceAll("\"","");
+                    path=path.replaceAll("//","/");
                     if(forEachContent.size()<i+1)
-                        forEachContent.add(forEachPath + node.getText().toString());
+                        forEachContent.add(readPath(path,XPathConstants.STRING).toString());
                     else
                     {
                         tmp=forEachContent.get(i);
-                        tmp+=forEachPath + node.getText().toString();
+                        tmp+=(readPath(path,XPathConstants.STRING).toString());
                         forEachContent.remove(i);
                         forEachContent.add(i, tmp);
                     }
@@ -328,9 +331,10 @@ class Translation extends DepthFirstAdapter {
     }
 
     public void inAForEachTemplateContent(AForEachTemplateContent node){
-        forEachPath=currentMatch+node.getText();
+        forEachPath=currentMatch.trim().replaceAll("\"","")+"/"+node.getText().toString().trim().replaceAll("\"","");
         forEach=true;
-         forEachElements=5;
+         forEachElements=((NodeList)readPath(forEachPath,XPathConstants.NODESET)).getLength();
+         
         //todo:dodanie w jakiejs strukturze wszystkich danych z xmla i zapisujemy jezeli jest sort do sortIndex odpowiednia kolejnosc
         //np. jezeli pierwszy element ma byc piaty to dodajemy: sortIndex.add(0,4);
     }
