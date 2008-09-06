@@ -10,6 +10,7 @@ import java.util.regex.*;
 import xslt.analysis.*;
 import xslt.node.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.xml.XMLConstants;
 import javax.xml.namespace.QName;
 import javax.xml.parsers.*;
@@ -180,7 +181,6 @@ class Translation extends DepthFirstAdapter {
                         tmp+=text;
                         forEachContent.remove(sortIndexes.get(i));
                         forEachContent.add(sortIndexes.get(i), tmp);
-
                 }
                 }
                 else
@@ -224,8 +224,9 @@ class Translation extends DepthFirstAdapter {
                         }
                     for(int i=0;i<sortIndexes.size();i++)
                 {
+                        String path=forEachPath +"["+(i+1)+"]"+"/"+ node.getText().toString().trim().replaceAll("\"","");
                         tmp=forEachContent.get(sortIndexes.get(i));
-                        tmp+=forEachPath + node.getText().toString();
+                        tmp+=(readPath(path,XPathConstants.STRING).toString());
                         forEachContent.remove(sortIndexes.get(i));
                         forEachContent.add(sortIndexes.get(i), tmp);
 
@@ -307,6 +308,21 @@ class Translation extends DepthFirstAdapter {
         sortSelect=node.getText().toString();
     }
     public void outASorting(ASorting node){
+        ArrayList<Integer> values = new ArrayList<Integer>();
+        String path = forEachPath.trim().replaceAll("\"","");
+        int size=((NodeList)readPath(path,XPathConstants.NODESET)).getLength();
+        String tmp;
+        for(int i=0;i<size;i++)
+        {
+            tmp=readPath(path+"["+(i+1)+"]"+"/"+sortSelect.trim().replaceAll("\"",""),XPathConstants.STRING).toString();
+            values.add(Integer.parseInt(tmp));
+        }
+        Collections.sort(values);
+        for(int i=0;i<size;i++)
+        {
+           sortIndexes.add(i, values.indexOf(Integer.parseInt(readPath(path+"["+(i+1)+"]"+"/"+sortSelect.trim().replaceAll("\"",""),XPathConstants.STRING).toString())));
+            
+        }
         //na podstawie pobranych w foreach elementow z xmla oraz ustawionych zmiennych na podstawie opcji sorta nastepuje sortowanie po pierwszym dziecku
         sort=true;
 
