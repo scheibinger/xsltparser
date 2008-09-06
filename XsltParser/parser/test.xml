@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ksiazka>
-  <id>
-    <tytul>Pobawmy sie w webmasterow</tytul>
-    <isbn>123456789</isbn>
-    <autor>Jeszcze nieznany</autor>
-  </id>
-  <spisTresci>
-    <r>
-    <chapter>Rozdzial 1</chapter>
-    <tytul>cos tam</tytul>
-    </r>
+<katalog>
+    <tytulKatalogu>Jakis tytul</tytulKatalogu>
+    <ksiazka>
+    <id>
+        <tytul>Pobawmy sie w webmasterow</tytul>
+        <isbn>123456789</isbn>
+        <autor>Jeszcze nieznany</autor>
+    </id>
+    <spisTresci>
+        <rozdzialy>
+            <r>
+                <chapter>Rozdzial 1</chapter>
+                <tytul>cos tam</tytul>
+            </r>
+            <r>
+                <chapter>Rozdzial 2</chapter>
+                <tytul>cos tam dwa</tytul>
+            </r>
+            <r>
+                <chapter>Rozdzial 3</chapter>
+                <tytul>cos tam trzy</tytul>
+            </r>
+        </rozdzialy>
+    </spisTresci>
+    </ksiazka>
     
-  </spisTresci>
-</ksiazka>
+</katalog>
+    
