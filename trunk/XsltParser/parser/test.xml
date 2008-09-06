@@ -6,6 +6,10 @@
     <autor>Jeszcze nieznany</autor>
   </id>
   <spisTresci>
-    <r>Rozdzial 1</r>
+    <r>
+    <chapter>Rozdzial 1</chapter>
+    <tytul>cos tam</tytul>
+    </r>
+    
   </spisTresci>
 </ksiazka>
