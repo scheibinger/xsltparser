@@ -168,22 +168,33 @@ class Translation extends DepthFirstAdapter {
             }
            if(forEach)
             {
-                if(sort)
+                /*if(sort)
                 {
                     if(sortIndexes.size()>forEachContent.size())
-                        for(int i=forEachContent.size()-1;i<sortIndexes.size();i++)
+                        for(int i=forEachContent.size();i<sortIndexes.size();i++)
                         {
                                 forEachContent.add("");
                         }
                     for(int i=0;i<sortIndexes.size();i++)
                 {
-                        tmp=forEachContent.get(sortIndexes.get(i));
-                        tmp+=text;
-                        forEachContent.remove(sortIndexes.get(i));
+                    if(forEachContent.get(i).contentEquals(""))
+                        {
+                        tmp=forEachContent.get(i);
+                        
+                        forEachContent.remove(i);
                         forEachContent.add(sortIndexes.get(i), tmp);
+                        }
+                        else
+                        {
+                            tmp=forEachContent.get(sortIndexes.get(i));
+                            tmp+=text;
+                            forEachContent.remove(sortIndexes.get(i));
+                            forEachContent.add(sortIndexes.get(i), tmp);
+                            
+                        }
                 }
-                }
-                else
+                }*/
+                //else
                 for(int i=0;i<forEachElements;i++)
                 {
                     if(forEachContent.size()<i+1)
@@ -194,6 +205,10 @@ class Translation extends DepthFirstAdapter {
                         tmp+=text;
                         forEachContent.remove(i);
                         forEachContent.add(i, tmp);
+                        
+                        
+                            
+                        
                     }
                 }
             }
@@ -215,24 +230,36 @@ class Translation extends DepthFirstAdapter {
                    if(forEach)
             {
              String tmp;
-                if(sort)
+                /*if(sort)
                 {
                     if(sortIndexes.size()>forEachContent.size())
-                        for(int i=forEachContent.size()-1;i<sortIndexes.size();i++)
+                        for(int i=forEachContent.size();i<sortIndexes.size();i++)
                         {
                                 forEachContent.add("");
                         }
                     for(int i=0;i<sortIndexes.size();i++)
                 {
                         String path=forEachPath +"["+(i+1)+"]"+"/"+ node.getText().toString().trim().replaceAll("\"","");
-                        tmp=forEachContent.get(sortIndexes.get(i));
-                        tmp+=(readPath(path,XPathConstants.STRING).toString());
-                        forEachContent.remove(sortIndexes.get(i));
-                        forEachContent.add(sortIndexes.get(i), tmp);
+                        if(forEachContent.get(i).contentEquals(""))
+                        {
+                            tmp=forEachContent.get(i);
+                            tmp+=(readPath(path,XPathConstants.STRING).toString());
+                            forEachContent.remove(i);
+                            forEachContent.add(sortIndexes.get(i), tmp);
+                            
+                        }
+                        else
+                        {
+                            tmp=forEachContent.get(sortIndexes.get(i));
+                            tmp+=(readPath(path,XPathConstants.STRING).toString());
+                            forEachContent.remove(sortIndexes.get(i));
+                            forEachContent.add(sortIndexes.get(i), tmp);
+                            
+                        }
 
                 }
-                }
-                else
+                }*/
+                //else
                 for(int i=0;i<forEachElements;i++)
                 {
                     String path=forEachPath +"["+(i+1)+"]"+"/"+ node.getText().toString().trim().replaceAll("\"","");
@@ -356,6 +383,21 @@ class Translation extends DepthFirstAdapter {
     }
     public void outAForEachTemplateContent(AForEachTemplateContent node){
         forEach=false;
+        if(sort)
+        {
+            String tmp;
+            String[]sortedList = new String[3];
+            
+            for(int i=0;i<sortIndexes.size();i++)
+            {
+                tmp=forEachContent.get(i);            
+                sortedList[sortIndexes.get(i)]=tmp;
+                
+            }
+            forEachContent.removeAll(forEachContent);
+            for(int i = 0;i<sortedList.length;i++)
+                forEachContent.add(sortedList[i]);
+        }
         if(applyingTemplateIndex==0)
         templates.addAll(forEachContent);//todo:dodac sprawdzanie co z ifa moze byc wstawione
         else
