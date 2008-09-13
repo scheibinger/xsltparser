@@ -939,10 +939,6 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getParamSelect().apply(this);
         }
-        if(node.getSelectEqual() != null)
-        {
-            node.getSelectEqual().apply(this);
-        }
         if(node.getSelect() != null)
         {
             node.getSelect().apply(this);
@@ -951,9 +947,9 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getParamName().apply(this);
         }
-        if(node.getNameEqual() != null)
+        if(node.getEqual() != null)
         {
-            node.getNameEqual().apply(this);
+            node.getEqual().apply(this);
         }
         if(node.getName() != null)
         {
@@ -2072,37 +2068,53 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     public void caseAVariableTemplateContent(AVariableTemplateContent node)
     {
         inAVariableTemplateContent(node);
-        if(node.getCloseTagRange() != null)
+        if(node.getCloseXslt() != null)
         {
-            node.getCloseTagRange().apply(this);
+            node.getCloseXslt().apply(this);
         }
-        if(node.getParamSelect() != null)
+        if(node.getClose() != null)
         {
-            node.getParamSelect().apply(this);
+            node.getClose().apply(this);
         }
-        if(node.getSelectEqual() != null)
+        if(node.getCloseXsltTag() != null)
         {
-            node.getSelectEqual().apply(this);
+            node.getCloseXsltTag().apply(this);
+        }
+        {
+            List<PTemplateContent> copy = new ArrayList<PTemplateContent>(node.getTemplateContent());
+            Collections.reverse(copy);
+            for(PTemplateContent e : copy)
+            {
+                e.apply(this);
+            }
+        }
+        if(node.getCloseVariable() != null)
+        {
+            node.getCloseVariable().apply(this);
+        }
+        if(node.getVariableSelect() != null)
+        {
+            node.getVariableSelect().apply(this);
         }
         if(node.getSelect() != null)
         {
             node.getSelect().apply(this);
         }
-        if(node.getParamName() != null)
+        if(node.getVariableName() != null)
         {
-            node.getParamName().apply(this);
+            node.getVariableName().apply(this);
         }
-        if(node.getNameEqual() != null)
+        if(node.getEqual() != null)
         {
-            node.getNameEqual().apply(this);
+            node.getEqual().apply(this);
         }
         if(node.getName() != null)
         {
             node.getName().apply(this);
         }
-        if(node.getVariable() != null)
+        if(node.getOpen() != null)
         {
-            node.getVariable().apply(this);
+            node.getOpen().apply(this);
         }
         if(node.getXsltTag() != null)
         {

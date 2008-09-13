@@ -42,6 +42,7 @@ class Translation extends DepthFirstAdapter {
     private ArrayList<String> currentVariables=new ArrayList<String>();
     private String errors="";
     private ArrayList<Integer> sortIndexes = new ArrayList<Integer>();
+    private ArrayList<Boolean> ifResults = new ArrayList<Boolean>();
     private Boolean sort=false;
     private String sortSelect="";
     private String attributes;
@@ -356,17 +357,14 @@ class Translation extends DepthFirstAdapter {
     }
     public void inAIfTemplateContent(AIfTemplateContent node) {
         String test = node.getText().toString();
-        String[] tab = test.split(" ");
-        int value = Integer.parseInt(tab[2]);
-        currentMatch += tab[0];
-        //todo:dodanie sprawdzanie warunkow po wyciagnieciu danych z xmla
-        //sprawdzanie jak jest foreach dla kazdego dziecka
-        if (tab[1].contentEquals("&gt;")) {
-
-        } else if (tab[1].contentEquals("&lt;")) {
-
+        String path = forEachPath.trim().replaceAll("\"","");
+        int size=((NodeList)readPath(path,XPathConstants.NODESET)).getLength();
+        Boolean tmp;
+        for(int i=0;i<size;i++)
+        {
+            tmp=Boolean.getBoolean(readPath(path+"["+(i+1)+"]"+"/"+test.trim().replaceAll("\"",""),XPathConstants.BOOLEAN).toString());
+            ifResults.add(tmp);
         }
-
     }
 
     public void outAIfTemplateContent(AIfTemplateContent node) {
@@ -386,17 +384,37 @@ class Translation extends DepthFirstAdapter {
         if(sort)
         {
             String tmp;
-            String[]sortedList = new String[3];
-            
+            boolean tmp2;
+            String[]sortedList = new String[sortIndexes.size()];
+            boolean[] sortedList2 = new boolean[ifResults.size()];               
             for(int i=0;i<sortIndexes.size();i++)
             {
-                tmp=forEachContent.get(i);            
+                tmp=forEachContent.get(i);
                 sortedList[sortIndexes.get(i)]=tmp;
+                if(ifResults.size()>0)
+                {
+                    tmp2=ifResults.get(i);
+                    sortedList2[sortIndexes.get(i)]=tmp2;
+                }
                 
             }
             forEachContent.removeAll(forEachContent);
             for(int i = 0;i<sortedList.length;i++)
                 forEachContent.add(sortedList[i]);
+            if(ifResults.size()>0)
+               for(int i =0;i<sortedList.length;i++)
+               {
+                   if(sortedList2[i]==false)
+                       forEachContent.remove(i);
+               }
+        }
+        if(ifResults.size()>0)
+        {
+           for(int i =0;i<forEachContent.size();i++)
+               {
+                   if(ifResults.get(i)==false)
+                       forEachContent.remove(i);
+               } 
         }
         if(applyingTemplateIndex==0)
         templates.addAll(forEachContent);//todo:dodac sprawdzanie co z ifa moze byc wstawione
@@ -405,6 +423,7 @@ class Translation extends DepthFirstAdapter {
         forEachContent.removeAll(forEachContent);
         sort=false;
         sortIndexes.removeAll(sortIndexes);
+        ifResults.removeAll(ifResults);
     }
     
     public void inAChooseTemplateContent(AChooseTemplateContent node){

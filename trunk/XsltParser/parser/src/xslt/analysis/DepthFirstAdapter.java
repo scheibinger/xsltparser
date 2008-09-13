@@ -943,9 +943,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getName().apply(this);
         }
-        if(node.getNameEqual() != null)
+        if(node.getEqual() != null)
         {
-            node.getNameEqual().apply(this);
+            node.getEqual().apply(this);
         }
         if(node.getParamName() != null)
         {
@@ -954,10 +954,6 @@ public class DepthFirstAdapter extends AnalysisAdapter
         if(node.getSelect() != null)
         {
             node.getSelect().apply(this);
-        }
-        if(node.getSelectEqual() != null)
-        {
-            node.getSelectEqual().apply(this);
         }
         if(node.getParamSelect() != null)
         {
@@ -2067,37 +2063,52 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getXsltTag().apply(this);
         }
-        if(node.getVariable() != null)
+        if(node.getOpen() != null)
         {
-            node.getVariable().apply(this);
+            node.getOpen().apply(this);
         }
         if(node.getName() != null)
         {
             node.getName().apply(this);
         }
-        if(node.getNameEqual() != null)
+        if(node.getEqual() != null)
         {
-            node.getNameEqual().apply(this);
+            node.getEqual().apply(this);
         }
-        if(node.getParamName() != null)
+        if(node.getVariableName() != null)
         {
-            node.getParamName().apply(this);
+            node.getVariableName().apply(this);
         }
         if(node.getSelect() != null)
         {
             node.getSelect().apply(this);
         }
-        if(node.getSelectEqual() != null)
+        if(node.getVariableSelect() != null)
         {
-            node.getSelectEqual().apply(this);
+            node.getVariableSelect().apply(this);
         }
-        if(node.getParamSelect() != null)
+        if(node.getCloseVariable() != null)
         {
-            node.getParamSelect().apply(this);
+            node.getCloseVariable().apply(this);
         }
-        if(node.getCloseTagRange() != null)
         {
-            node.getCloseTagRange().apply(this);
+            List<PTemplateContent> copy = new ArrayList<PTemplateContent>(node.getTemplateContent());
+            for(PTemplateContent e : copy)
+            {
+                e.apply(this);
+            }
+        }
+        if(node.getCloseXsltTag() != null)
+        {
+            node.getCloseXsltTag().apply(this);
+        }
+        if(node.getClose() != null)
+        {
+            node.getClose().apply(this);
+        }
+        if(node.getCloseXslt() != null)
+        {
+            node.getCloseXslt().apply(this);
         }
         outAVariableTemplateContent(node);
     }
