@@ -12,14 +12,17 @@
             <r>
                 <chapter>Rozdzial 1</chapter>
                 <tytul>cos tam</tytul>
+                <stron>154</stron>
             </r>
             <r>
                 <chapter>Rozdzial 2</chapter>
                 <tytul>cos tam dwa</tytul>
+                <stron>45</stron>
             </r>
             <r>
                 <chapter>Rozdzial 3</chapter>
                 <tytul>cos tam trzy</tytul>
+                <stron>130</stron>
             </r>
         </rozdzialy>
     </spisTresci>

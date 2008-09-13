@@ -10,10 +10,9 @@ public final class AVariableInnerElement extends PInnerElement
     private TXsltTag _xsltTag_;
     private TVariable _variable_;
     private TName _name_;
-    private TEqual _nameEqual_;
+    private TEqual _equal_;
     private PText _paramName_;
     private TSelect _select_;
-    private TEqual _selectEqual_;
     private PText _paramSelect_;
     private TCloseTagRange _closeTagRange_;
 
@@ -26,10 +25,9 @@ public final class AVariableInnerElement extends PInnerElement
         @SuppressWarnings("hiding") TXsltTag _xsltTag_,
         @SuppressWarnings("hiding") TVariable _variable_,
         @SuppressWarnings("hiding") TName _name_,
-        @SuppressWarnings("hiding") TEqual _nameEqual_,
+        @SuppressWarnings("hiding") TEqual _equal_,
         @SuppressWarnings("hiding") PText _paramName_,
         @SuppressWarnings("hiding") TSelect _select_,
-        @SuppressWarnings("hiding") TEqual _selectEqual_,
         @SuppressWarnings("hiding") PText _paramSelect_,
         @SuppressWarnings("hiding") TCloseTagRange _closeTagRange_)
     {
@@ -40,13 +38,11 @@ public final class AVariableInnerElement extends PInnerElement
 
         setName(_name_);
 
-        setNameEqual(_nameEqual_);
+        setEqual(_equal_);
 
         setParamName(_paramName_);
 
         setSelect(_select_);
-
-        setSelectEqual(_selectEqual_);
 
         setParamSelect(_paramSelect_);
 
@@ -61,10 +57,9 @@ public final class AVariableInnerElement extends PInnerElement
             cloneNode(this._xsltTag_),
             cloneNode(this._variable_),
             cloneNode(this._name_),
-            cloneNode(this._nameEqual_),
+            cloneNode(this._equal_),
             cloneNode(this._paramName_),
             cloneNode(this._select_),
-            cloneNode(this._selectEqual_),
             cloneNode(this._paramSelect_),
             cloneNode(this._closeTagRange_));
     }
@@ -149,16 +144,16 @@ public final class AVariableInnerElement extends PInnerElement
         this._name_ = node;
     }
 
-    public TEqual getNameEqual()
+    public TEqual getEqual()
     {
-        return this._nameEqual_;
+        return this._equal_;
     }
 
-    public void setNameEqual(TEqual node)
+    public void setEqual(TEqual node)
     {
-        if(this._nameEqual_ != null)
+        if(this._equal_ != null)
         {
-            this._nameEqual_.parent(null);
+            this._equal_.parent(null);
         }
 
         if(node != null)
@@ -171,7 +166,7 @@ public final class AVariableInnerElement extends PInnerElement
             node.parent(this);
         }
 
-        this._nameEqual_ = node;
+        this._equal_ = node;
     }
 
     public PText getParamName()
@@ -222,31 +217,6 @@ public final class AVariableInnerElement extends PInnerElement
         }
 
         this._select_ = node;
-    }
-
-    public TEqual getSelectEqual()
-    {
-        return this._selectEqual_;
-    }
-
-    public void setSelectEqual(TEqual node)
-    {
-        if(this._selectEqual_ != null)
-        {
-            this._selectEqual_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._selectEqual_ = node;
     }
 
     public PText getParamSelect()
@@ -306,10 +276,9 @@ public final class AVariableInnerElement extends PInnerElement
             + toString(this._xsltTag_)
             + toString(this._variable_)
             + toString(this._name_)
-            + toString(this._nameEqual_)
+            + toString(this._equal_)
             + toString(this._paramName_)
             + toString(this._select_)
-            + toString(this._selectEqual_)
             + toString(this._paramSelect_)
             + toString(this._closeTagRange_);
     }
@@ -336,9 +305,9 @@ public final class AVariableInnerElement extends PInnerElement
             return;
         }
 
-        if(this._nameEqual_ == child)
+        if(this._equal_ == child)
         {
-            this._nameEqual_ = null;
+            this._equal_ = null;
             return;
         }
 
@@ -351,12 +320,6 @@ public final class AVariableInnerElement extends PInnerElement
         if(this._select_ == child)
         {
             this._select_ = null;
-            return;
-        }
-
-        if(this._selectEqual_ == child)
-        {
-            this._selectEqual_ = null;
             return;
         }
 
@@ -397,9 +360,9 @@ public final class AVariableInnerElement extends PInnerElement
             return;
         }
 
-        if(this._nameEqual_ == oldChild)
+        if(this._equal_ == oldChild)
         {
-            setNameEqual((TEqual) newChild);
+            setEqual((TEqual) newChild);
             return;
         }
 
@@ -412,12 +375,6 @@ public final class AVariableInnerElement extends PInnerElement
         if(this._select_ == oldChild)
         {
             setSelect((TSelect) newChild);
-            return;
-        }
-
-        if(this._selectEqual_ == oldChild)
-        {
-            setSelectEqual((TEqual) newChild);
             return;
         }
 

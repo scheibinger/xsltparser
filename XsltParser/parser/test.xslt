@@ -17,10 +17,13 @@
   <xsl:template match="rozdzialy">
       
       <xsl:for-each select="r">
+      <xsl:if test="stron &gt; 100">
+          <xsl:sort select="stron">
        <tr>
        <td>Tytul rozdzialu: <xsl:value-of select="chapter" /></td>
        <td>Nr rozdzialu: <xsl:value-of select="tytul" /></td>
         </tr>
+         </xsl:if>
       </xsl:for-each>
     
   </xsl:template>

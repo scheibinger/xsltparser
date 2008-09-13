@@ -2,20 +2,24 @@
 
 package xslt.node;
 
+import java.util.*;
 import xslt.analysis.*;
 
 @SuppressWarnings("nls")
 public final class AVariableTemplateContent extends PTemplateContent
 {
     private TXsltTag _xsltTag_;
-    private TVariable _variable_;
+    private TVariable _open_;
     private TName _name_;
-    private TEqual _nameEqual_;
-    private PText _paramName_;
+    private TEqual _equal_;
+    private PText _variableName_;
     private TSelect _select_;
-    private TEqual _selectEqual_;
-    private PText _paramSelect_;
-    private TCloseTagRange _closeTagRange_;
+    private PText _variableSelect_;
+    private TCloseTag _closeVariable_;
+    private final LinkedList<PTemplateContent> _templateContent_ = new LinkedList<PTemplateContent>();
+    private TCloseXsltTag _closeXsltTag_;
+    private TVariable _close_;
+    private TCloseTag _closeXslt_;
 
     public AVariableTemplateContent()
     {
@@ -24,33 +28,42 @@ public final class AVariableTemplateContent extends PTemplateContent
 
     public AVariableTemplateContent(
         @SuppressWarnings("hiding") TXsltTag _xsltTag_,
-        @SuppressWarnings("hiding") TVariable _variable_,
+        @SuppressWarnings("hiding") TVariable _open_,
         @SuppressWarnings("hiding") TName _name_,
-        @SuppressWarnings("hiding") TEqual _nameEqual_,
-        @SuppressWarnings("hiding") PText _paramName_,
+        @SuppressWarnings("hiding") TEqual _equal_,
+        @SuppressWarnings("hiding") PText _variableName_,
         @SuppressWarnings("hiding") TSelect _select_,
-        @SuppressWarnings("hiding") TEqual _selectEqual_,
-        @SuppressWarnings("hiding") PText _paramSelect_,
-        @SuppressWarnings("hiding") TCloseTagRange _closeTagRange_)
+        @SuppressWarnings("hiding") PText _variableSelect_,
+        @SuppressWarnings("hiding") TCloseTag _closeVariable_,
+        @SuppressWarnings("hiding") List<PTemplateContent> _templateContent_,
+        @SuppressWarnings("hiding") TCloseXsltTag _closeXsltTag_,
+        @SuppressWarnings("hiding") TVariable _close_,
+        @SuppressWarnings("hiding") TCloseTag _closeXslt_)
     {
         // Constructor
         setXsltTag(_xsltTag_);
 
-        setVariable(_variable_);
+        setOpen(_open_);
 
         setName(_name_);
 
-        setNameEqual(_nameEqual_);
+        setEqual(_equal_);
 
-        setParamName(_paramName_);
+        setVariableName(_variableName_);
 
         setSelect(_select_);
 
-        setSelectEqual(_selectEqual_);
+        setVariableSelect(_variableSelect_);
 
-        setParamSelect(_paramSelect_);
+        setCloseVariable(_closeVariable_);
 
-        setCloseTagRange(_closeTagRange_);
+        setTemplateContent(_templateContent_);
+
+        setCloseXsltTag(_closeXsltTag_);
+
+        setClose(_close_);
+
+        setCloseXslt(_closeXslt_);
 
     }
 
@@ -59,14 +72,17 @@ public final class AVariableTemplateContent extends PTemplateContent
     {
         return new AVariableTemplateContent(
             cloneNode(this._xsltTag_),
-            cloneNode(this._variable_),
+            cloneNode(this._open_),
             cloneNode(this._name_),
-            cloneNode(this._nameEqual_),
-            cloneNode(this._paramName_),
+            cloneNode(this._equal_),
+            cloneNode(this._variableName_),
             cloneNode(this._select_),
-            cloneNode(this._selectEqual_),
-            cloneNode(this._paramSelect_),
-            cloneNode(this._closeTagRange_));
+            cloneNode(this._variableSelect_),
+            cloneNode(this._closeVariable_),
+            cloneList(this._templateContent_),
+            cloneNode(this._closeXsltTag_),
+            cloneNode(this._close_),
+            cloneNode(this._closeXslt_));
     }
 
     public void apply(Switch sw)
@@ -99,16 +115,16 @@ public final class AVariableTemplateContent extends PTemplateContent
         this._xsltTag_ = node;
     }
 
-    public TVariable getVariable()
+    public TVariable getOpen()
     {
-        return this._variable_;
+        return this._open_;
     }
 
-    public void setVariable(TVariable node)
+    public void setOpen(TVariable node)
     {
-        if(this._variable_ != null)
+        if(this._open_ != null)
         {
-            this._variable_.parent(null);
+            this._open_.parent(null);
         }
 
         if(node != null)
@@ -121,7 +137,7 @@ public final class AVariableTemplateContent extends PTemplateContent
             node.parent(this);
         }
 
-        this._variable_ = node;
+        this._open_ = node;
     }
 
     public TName getName()
@@ -149,16 +165,16 @@ public final class AVariableTemplateContent extends PTemplateContent
         this._name_ = node;
     }
 
-    public TEqual getNameEqual()
+    public TEqual getEqual()
     {
-        return this._nameEqual_;
+        return this._equal_;
     }
 
-    public void setNameEqual(TEqual node)
+    public void setEqual(TEqual node)
     {
-        if(this._nameEqual_ != null)
+        if(this._equal_ != null)
         {
-            this._nameEqual_.parent(null);
+            this._equal_.parent(null);
         }
 
         if(node != null)
@@ -171,19 +187,19 @@ public final class AVariableTemplateContent extends PTemplateContent
             node.parent(this);
         }
 
-        this._nameEqual_ = node;
+        this._equal_ = node;
     }
 
-    public PText getParamName()
+    public PText getVariableName()
     {
-        return this._paramName_;
+        return this._variableName_;
     }
 
-    public void setParamName(PText node)
+    public void setVariableName(PText node)
     {
-        if(this._paramName_ != null)
+        if(this._variableName_ != null)
         {
-            this._paramName_.parent(null);
+            this._variableName_.parent(null);
         }
 
         if(node != null)
@@ -196,7 +212,7 @@ public final class AVariableTemplateContent extends PTemplateContent
             node.parent(this);
         }
 
-        this._paramName_ = node;
+        this._variableName_ = node;
     }
 
     public TSelect getSelect()
@@ -224,16 +240,16 @@ public final class AVariableTemplateContent extends PTemplateContent
         this._select_ = node;
     }
 
-    public TEqual getSelectEqual()
+    public PText getVariableSelect()
     {
-        return this._selectEqual_;
+        return this._variableSelect_;
     }
 
-    public void setSelectEqual(TEqual node)
+    public void setVariableSelect(PText node)
     {
-        if(this._selectEqual_ != null)
+        if(this._variableSelect_ != null)
         {
-            this._selectEqual_.parent(null);
+            this._variableSelect_.parent(null);
         }
 
         if(node != null)
@@ -246,19 +262,19 @@ public final class AVariableTemplateContent extends PTemplateContent
             node.parent(this);
         }
 
-        this._selectEqual_ = node;
+        this._variableSelect_ = node;
     }
 
-    public PText getParamSelect()
+    public TCloseTag getCloseVariable()
     {
-        return this._paramSelect_;
+        return this._closeVariable_;
     }
 
-    public void setParamSelect(PText node)
+    public void setCloseVariable(TCloseTag node)
     {
-        if(this._paramSelect_ != null)
+        if(this._closeVariable_ != null)
         {
-            this._paramSelect_.parent(null);
+            this._closeVariable_.parent(null);
         }
 
         if(node != null)
@@ -271,19 +287,39 @@ public final class AVariableTemplateContent extends PTemplateContent
             node.parent(this);
         }
 
-        this._paramSelect_ = node;
+        this._closeVariable_ = node;
     }
 
-    public TCloseTagRange getCloseTagRange()
+    public LinkedList<PTemplateContent> getTemplateContent()
     {
-        return this._closeTagRange_;
+        return this._templateContent_;
     }
 
-    public void setCloseTagRange(TCloseTagRange node)
+    public void setTemplateContent(List<PTemplateContent> list)
     {
-        if(this._closeTagRange_ != null)
+        this._templateContent_.clear();
+        this._templateContent_.addAll(list);
+        for(PTemplateContent e : list)
         {
-            this._closeTagRange_.parent(null);
+            if(e.parent() != null)
+            {
+                e.parent().removeChild(e);
+            }
+
+            e.parent(this);
+        }
+    }
+
+    public TCloseXsltTag getCloseXsltTag()
+    {
+        return this._closeXsltTag_;
+    }
+
+    public void setCloseXsltTag(TCloseXsltTag node)
+    {
+        if(this._closeXsltTag_ != null)
+        {
+            this._closeXsltTag_.parent(null);
         }
 
         if(node != null)
@@ -296,7 +332,57 @@ public final class AVariableTemplateContent extends PTemplateContent
             node.parent(this);
         }
 
-        this._closeTagRange_ = node;
+        this._closeXsltTag_ = node;
+    }
+
+    public TVariable getClose()
+    {
+        return this._close_;
+    }
+
+    public void setClose(TVariable node)
+    {
+        if(this._close_ != null)
+        {
+            this._close_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._close_ = node;
+    }
+
+    public TCloseTag getCloseXslt()
+    {
+        return this._closeXslt_;
+    }
+
+    public void setCloseXslt(TCloseTag node)
+    {
+        if(this._closeXslt_ != null)
+        {
+            this._closeXslt_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._closeXslt_ = node;
     }
 
     @Override
@@ -304,14 +390,17 @@ public final class AVariableTemplateContent extends PTemplateContent
     {
         return ""
             + toString(this._xsltTag_)
-            + toString(this._variable_)
+            + toString(this._open_)
             + toString(this._name_)
-            + toString(this._nameEqual_)
-            + toString(this._paramName_)
+            + toString(this._equal_)
+            + toString(this._variableName_)
             + toString(this._select_)
-            + toString(this._selectEqual_)
-            + toString(this._paramSelect_)
-            + toString(this._closeTagRange_);
+            + toString(this._variableSelect_)
+            + toString(this._closeVariable_)
+            + toString(this._templateContent_)
+            + toString(this._closeXsltTag_)
+            + toString(this._close_)
+            + toString(this._closeXslt_);
     }
 
     @Override
@@ -324,9 +413,9 @@ public final class AVariableTemplateContent extends PTemplateContent
             return;
         }
 
-        if(this._variable_ == child)
+        if(this._open_ == child)
         {
-            this._variable_ = null;
+            this._open_ = null;
             return;
         }
 
@@ -336,15 +425,15 @@ public final class AVariableTemplateContent extends PTemplateContent
             return;
         }
 
-        if(this._nameEqual_ == child)
+        if(this._equal_ == child)
         {
-            this._nameEqual_ = null;
+            this._equal_ = null;
             return;
         }
 
-        if(this._paramName_ == child)
+        if(this._variableName_ == child)
         {
-            this._paramName_ = null;
+            this._variableName_ = null;
             return;
         }
 
@@ -354,21 +443,38 @@ public final class AVariableTemplateContent extends PTemplateContent
             return;
         }
 
-        if(this._selectEqual_ == child)
+        if(this._variableSelect_ == child)
         {
-            this._selectEqual_ = null;
+            this._variableSelect_ = null;
             return;
         }
 
-        if(this._paramSelect_ == child)
+        if(this._closeVariable_ == child)
         {
-            this._paramSelect_ = null;
+            this._closeVariable_ = null;
             return;
         }
 
-        if(this._closeTagRange_ == child)
+        if(this._templateContent_.remove(child))
         {
-            this._closeTagRange_ = null;
+            return;
+        }
+
+        if(this._closeXsltTag_ == child)
+        {
+            this._closeXsltTag_ = null;
+            return;
+        }
+
+        if(this._close_ == child)
+        {
+            this._close_ = null;
+            return;
+        }
+
+        if(this._closeXslt_ == child)
+        {
+            this._closeXslt_ = null;
             return;
         }
 
@@ -385,9 +491,9 @@ public final class AVariableTemplateContent extends PTemplateContent
             return;
         }
 
-        if(this._variable_ == oldChild)
+        if(this._open_ == oldChild)
         {
-            setVariable((TVariable) newChild);
+            setOpen((TVariable) newChild);
             return;
         }
 
@@ -397,15 +503,15 @@ public final class AVariableTemplateContent extends PTemplateContent
             return;
         }
 
-        if(this._nameEqual_ == oldChild)
+        if(this._equal_ == oldChild)
         {
-            setNameEqual((TEqual) newChild);
+            setEqual((TEqual) newChild);
             return;
         }
 
-        if(this._paramName_ == oldChild)
+        if(this._variableName_ == oldChild)
         {
-            setParamName((PText) newChild);
+            setVariableName((PText) newChild);
             return;
         }
 
@@ -415,21 +521,51 @@ public final class AVariableTemplateContent extends PTemplateContent
             return;
         }
 
-        if(this._selectEqual_ == oldChild)
+        if(this._variableSelect_ == oldChild)
         {
-            setSelectEqual((TEqual) newChild);
+            setVariableSelect((PText) newChild);
             return;
         }
 
-        if(this._paramSelect_ == oldChild)
+        if(this._closeVariable_ == oldChild)
         {
-            setParamSelect((PText) newChild);
+            setCloseVariable((TCloseTag) newChild);
             return;
         }
 
-        if(this._closeTagRange_ == oldChild)
+        for(ListIterator<PTemplateContent> i = this._templateContent_.listIterator(); i.hasNext();)
         {
-            setCloseTagRange((TCloseTagRange) newChild);
+            if(i.next() == oldChild)
+            {
+                if(newChild != null)
+                {
+                    i.set((PTemplateContent) newChild);
+                    newChild.parent(this);
+                    oldChild.parent(null);
+                    return;
+                }
+
+                i.remove();
+                oldChild.parent(null);
+                return;
+            }
+        }
+
+        if(this._closeXsltTag_ == oldChild)
+        {
+            setCloseXsltTag((TCloseXsltTag) newChild);
+            return;
+        }
+
+        if(this._close_ == oldChild)
+        {
+            setClose((TVariable) newChild);
+            return;
+        }
+
+        if(this._closeXslt_ == oldChild)
+        {
+            setCloseXslt((TCloseTag) newChild);
             return;
         }
 
