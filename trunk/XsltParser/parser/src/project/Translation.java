@@ -36,7 +36,7 @@ class Translation extends DepthFirstAdapter {
     private String forEachPath;
     private int forEachElements=0;
     private ArrayList<String> forEachContent= new ArrayList<String>();
-
+    private ArrayList<Object> chooseIndexes = new ArrayList<Object>();
     private ArrayList<Boolean> forEachIf = new ArrayList<Boolean>();
     private HashMap variables=new HashMap();
     private ArrayList<String> currentVariables=new ArrayList<String>();
@@ -170,35 +170,31 @@ class Translation extends DepthFirstAdapter {
             }
            if(forEach)
             {
-                /*if(sort)
+                if(chooseIndexes.size()>0)
                 {
-                    if(sortIndexes.size()>forEachContent.size())
-                        for(int i=forEachContent.size();i<sortIndexes.size();i++)
+                    Boolean[] indexes = ((Boolean[])(chooseIndexes.get(0)));
+                    int buff=0;
+                    for(int i=0;i<forEachElements;i++)
+                    {
+                        if(indexes[i]==true)
                         {
-                                forEachContent.add("");
-                        }
-                    for(int i=0;i<sortIndexes.size();i++)
-                {
-                    if(forEachContent.get(i).contentEquals(""))
-                        {
-                        tmp=forEachContent.get(i);
-                        
-                        forEachContent.remove(i);
-                        forEachContent.add(sortIndexes.get(i), tmp);
-                        }
+                        buff--;
+                        if(forEachContent.size()<i+1+buff)
+                            forEachContent.add(text);
                         else
                         {
-                            tmp=forEachContent.get(sortIndexes.get(i));
+                            tmp=forEachContent.get(i+buff);
                             tmp+=text;
-                            forEachContent.remove(sortIndexes.get(i));
-                            forEachContent.add(sortIndexes.get(i), tmp);
-                            
+                            forEachContent.remove(i+buff);
+                            forEachContent.add(i+buff, tmp);    
                         }
+                        }
+                    }
                 }
-                }*/
-                //else
+                else
                 for(int i=0;i<forEachElements;i++)
                 {
+
                     if(forEachContent.size()<i+1)
                         forEachContent.add(text);
                     else
@@ -206,11 +202,7 @@ class Translation extends DepthFirstAdapter {
                         tmp=forEachContent.get(i);
                         tmp+=text;
                         forEachContent.remove(i);
-                        forEachContent.add(i, tmp);
-                        
-                        
-                            
-                        
+                        forEachContent.add(i, tmp);    
                     }
                 }
             }
@@ -232,36 +224,29 @@ class Translation extends DepthFirstAdapter {
                    if(forEach)
             {
              String tmp;
-                /*if(sort)
+                if(chooseIndexes.size()>0)
                 {
-                    if(sortIndexes.size()>forEachContent.size())
-                        for(int i=forEachContent.size();i<sortIndexes.size();i++)
-                        {
-                                forEachContent.add("");
-                        }
-                    for(int i=0;i<sortIndexes.size();i++)
-                {
+                    Boolean[] indexes = ((Boolean[])(chooseIndexes.get(0)));
+                    int buff=0;
+                    for(int i=0;i<forEachElements;i++)
+                    {
                         String path=forEachPath +"["+(i+1)+"]"+"/"+ node.getText().toString().trim().replaceAll("\"","");
-                        if(forEachContent.get(i).contentEquals(""))
+                        path=path.replaceAll("//","/");
+                        if(indexes[i]==true)
                         {
-                            tmp=forEachContent.get(i);
-                            tmp+=(readPath(path,XPathConstants.STRING).toString());
-                            forEachContent.remove(i);
-                            forEachContent.add(sortIndexes.get(i), tmp);
-                            
-                        }
+                        buff--;
+                        if(forEachContent.size()<i+1)
+                            forEachContent.add(readPath(path,XPathConstants.STRING).toString());
                         else
                         {
-                            tmp=forEachContent.get(sortIndexes.get(i));
+                            tmp=forEachContent.get(i+buff);
                             tmp+=(readPath(path,XPathConstants.STRING).toString());
-                            forEachContent.remove(sortIndexes.get(i));
-                            forEachContent.add(sortIndexes.get(i), tmp);
-                            
+                            forEachContent.remove(i+buff);
+                            forEachContent.add(i+buff, tmp);    
                         }
-
+                        }
+                    }
                 }
-                }*/
-                //else
                 for(int i=0;i<forEachElements;i++)
                 {
                     String path=forEachPath +"["+(i+1)+"]"+"/"+ node.getText().toString().trim().replaceAll("\"","");
@@ -510,19 +495,25 @@ class Translation extends DepthFirstAdapter {
         if(!alreadyChoosed)
         {
         String test = node.getText().toString();
-        String[] tab = test.split(" ");
-        int value = Integer.parseInt(tab[2]);
-        currentMatch += tab[0];
-        //todo:dodanie sprawdzanie warunkow po wyciagnieciu danych z xmla
-        if (tab[1].contentEquals("&gt;")) {
-
-        } else if (tab[1].contentEquals("&lt;")) {
-
+        
+        String path = forEachPath.trim().replaceAll("\"","");
+        int size=((NodeList)readPath(path,XPathConstants.NODESET)).getLength();
+        Boolean[] indexes = new Boolean[size];
+        String tmp;
+        for(int i=0;i<size;i++)
+        {
+            
+            tmp=(readPath(path+"["+(i+1)+"]["+test.trim().replaceAll("\"","")+']',XPathConstants.STRING).toString());
+            if(tmp.contentEquals(""))
+                indexes[i]=false;
+            else
+                indexes[i]=true;
         }
-        //jezeli spelniony to ustawiamy choose na true oraz alreadyChoosed na true
+        chooseIndexes.add(indexes);
         }
     }
     public void outATestElement(ATestElement node){
+        chooseIndexes.remove(0);
         choose=false;
     }
     public void outAChooseTemplateContent(AChooseTemplateContent node){
