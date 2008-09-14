@@ -49,7 +49,8 @@ class Translation extends DepthFirstAdapter {
     private Boolean attribute=false;
     private Boolean choose = true;
     private Boolean alreadyChoosed = false;
-    
+    private Boolean sortAsc = true;
+    private Boolean sortText = true;
     private Document xmlDocument;
     private XPath xPath;
 
@@ -335,35 +336,111 @@ class Translation extends DepthFirstAdapter {
     public void caseASelectSortOptions(ASelectSortOptions node){
         sortSelect=node.getText().toString();
     }
+    public void caseAOrderAscSortOptions(AOrderAscSortOptions node)
+    {
+        sortAsc=true;
+    }
+        public void caseAOrderDescSortOptions(AOrderDescSortOptions node)
+    {
+        sortAsc=false;
+    }
+        
+        public void caseADataTypeTextSortOptions(ADataTypeTextSortOptions node)
+    {
+        sortText=true;
+    }
+        public void caseADataTypeNumberSortOptions(ADataTypeNumberSortOptions node)
+    {
+        sortAsc=false;
+    }
     public void outASorting(ASorting node){
-        ArrayList<Integer> values = new ArrayList<Integer>();
+        ArrayList<Object> values = new ArrayList<Object>();
         String path = forEachPath.trim().replaceAll("\"","");
         int size=((NodeList)readPath(path,XPathConstants.NODESET)).getLength();
         String tmp;
         for(int i=0;i<size;i++)
         {
             tmp=readPath(path+"["+(i+1)+"]"+"/"+sortSelect.trim().replaceAll("\"",""),XPathConstants.STRING).toString();
-            values.add(Integer.parseInt(tmp));
+            values.add(tmp);
         }
-        Collections.sort(values);
+        Collections.sort(values,new Comparator() {
+
+            public int compare(Object o1, Object o2) {
+                int tmp1=0;
+                int tmp2=0;
+                String tmp3="";
+                String tmp4="";
+                if(sortText)
+                {
+                    tmp3=o1.toString();
+                    tmp4=o2.toString();
+                }
+                else
+                {
+                    tmp1=Integer.parseInt(o1.toString());
+                    tmp2=Integer.parseInt(o2.toString());
+                }
+                if(!sortText)
+                {
+                    if(sortAsc)
+                    {
+                        if(tmp1>tmp2)
+                        {
+                            return 1;
+                        }
+                        else if(tmp1<tmp2)
+                            return -1;
+                        else return 0;
+                    }
+                    else
+                    {
+                        if(tmp1>tmp2)
+                        {
+                            return -1;
+                        }
+                        else if(tmp1<tmp2)
+                            return 1;
+                        else return 0;
+                    }
+                }
+                else
+                {
+                   if(sortAsc)
+                    {
+                       return tmp3.compareTo(tmp4);
+                    }
+                   else
+                       return tmp4.compareTo(tmp3);
+                }
+            }
+        });
         for(int i=0;i<size;i++)
         {
-           sortIndexes.add(i, values.indexOf(Integer.parseInt(readPath(path+"["+(i+1)+"]"+"/"+sortSelect.trim().replaceAll("\"",""),XPathConstants.STRING).toString())));
+            if(sortText)
+                sortIndexes.add(i, values.indexOf((readPath(path+"["+(i+1)+"]"+"/"+sortSelect.trim().replaceAll("\"",""),XPathConstants.STRING).toString())));
+            else
+                sortIndexes.add(i, values.indexOf(Integer.parseInt(readPath(path+"["+(i+1)+"]"+"/"+sortSelect.trim().replaceAll("\"",""),XPathConstants.STRING).toString())));
             
         }
         //na podstawie pobranych w foreach elementow z xmla oraz ustawionych zmiennych na podstawie opcji sorta nastepuje sortowanie po pierwszym dziecku
         sort=true;
-
+        sortAsc=true;
+        sortText=true;
     }
     public void inAIfTemplateContent(AIfTemplateContent node) {
         String test = node.getText().toString();
+        //test=test.replaceAll("gt","&gt;");
         String path = forEachPath.trim().replaceAll("\"","");
         int size=((NodeList)readPath(path,XPathConstants.NODESET)).getLength();
-        Boolean tmp;
+       String tmp;
         for(int i=0;i<size;i++)
         {
-            tmp=Boolean.getBoolean(readPath(path+"["+(i+1)+"]"+"/"+test.trim().replaceAll("\"",""),XPathConstants.BOOLEAN).toString());
-            ifResults.add(tmp);
+            
+            tmp=(readPath(path+"["+(i+1)+"]["+test.trim().replaceAll("\"","")+']',XPathConstants.STRING).toString());
+            if(tmp.contentEquals(""))
+                ifResults.add(false);
+            else
+                ifResults.add(true);
         }
     }
 
@@ -408,7 +485,7 @@ class Translation extends DepthFirstAdapter {
                        forEachContent.remove(i);
                }
         }
-        if(ifResults.size()>0)
+        else if(ifResults.size()>0)
         {
            for(int i =0;i<forEachContent.size();i++)
                {
