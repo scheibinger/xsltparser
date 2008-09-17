@@ -2,6 +2,7 @@
 
 package xslt.node;
 
+import java.util.*;
 import xslt.analysis.*;
 
 @SuppressWarnings("nls")
@@ -9,7 +10,7 @@ public final class ASorting extends PSorting
 {
     private TXsltTag _xsltTag_;
     private TSort _sort_;
-    private PSortOptions _sortOptions_;
+    private final LinkedList<PSortOptions> _sortOptions_ = new LinkedList<PSortOptions>();
     private TCloseTag _closeTag_;
 
     public ASorting()
@@ -20,7 +21,7 @@ public final class ASorting extends PSorting
     public ASorting(
         @SuppressWarnings("hiding") TXsltTag _xsltTag_,
         @SuppressWarnings("hiding") TSort _sort_,
-        @SuppressWarnings("hiding") PSortOptions _sortOptions_,
+        @SuppressWarnings("hiding") List<PSortOptions> _sortOptions_,
         @SuppressWarnings("hiding") TCloseTag _closeTag_)
     {
         // Constructor
@@ -40,7 +41,7 @@ public final class ASorting extends PSorting
         return new ASorting(
             cloneNode(this._xsltTag_),
             cloneNode(this._sort_),
-            cloneNode(this._sortOptions_),
+            cloneList(this._sortOptions_),
             cloneNode(this._closeTag_));
     }
 
@@ -99,29 +100,24 @@ public final class ASorting extends PSorting
         this._sort_ = node;
     }
 
-    public PSortOptions getSortOptions()
+    public LinkedList<PSortOptions> getSortOptions()
     {
         return this._sortOptions_;
     }
 
-    public void setSortOptions(PSortOptions node)
+    public void setSortOptions(List<PSortOptions> list)
     {
-        if(this._sortOptions_ != null)
+        this._sortOptions_.clear();
+        this._sortOptions_.addAll(list);
+        for(PSortOptions e : list)
         {
-            this._sortOptions_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
+            if(e.parent() != null)
             {
-                node.parent().removeChild(node);
+                e.parent().removeChild(e);
             }
 
-            node.parent(this);
+            e.parent(this);
         }
-
-        this._sortOptions_ = node;
     }
 
     public TCloseTag getCloseTag()
@@ -175,9 +171,8 @@ public final class ASorting extends PSorting
             return;
         }
 
-        if(this._sortOptions_ == child)
+        if(this._sortOptions_.remove(child))
         {
-            this._sortOptions_ = null;
             return;
         }
 
@@ -206,10 +201,22 @@ public final class ASorting extends PSorting
             return;
         }
 
-        if(this._sortOptions_ == oldChild)
+        for(ListIterator<PSortOptions> i = this._sortOptions_.listIterator(); i.hasNext();)
         {
-            setSortOptions((PSortOptions) newChild);
-            return;
+            if(i.next() == oldChild)
+            {
+                if(newChild != null)
+                {
+                    i.set((PSortOptions) newChild);
+                    newChild.parent(this);
+                    oldChild.parent(null);
+                    return;
+                }
+
+                i.remove();
+                oldChild.parent(null);
+                return;
+            }
         }
 
         if(this._closeTag_ == oldChild)

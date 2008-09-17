@@ -173,7 +173,7 @@ class Translation extends DepthFirstAdapter {
                 if(chooseIndexes.size()>0)
                 {
                     Boolean[] indexes = ((Boolean[])(chooseIndexes.get(0)));
-                    int buff=0;
+                    int buff=1;
                     for(int i=0;i<forEachElements;i++)
                     {
                         if(indexes[i]==true)
@@ -227,7 +227,7 @@ class Translation extends DepthFirstAdapter {
                 if(chooseIndexes.size()>0)
                 {
                     Boolean[] indexes = ((Boolean[])(chooseIndexes.get(0)));
-                    int buff=0;
+                    int buff=1;
                     for(int i=0;i<forEachElements;i++)
                     {
                         String path=forEachPath +"["+(i+1)+"]"+"/"+ node.getText().toString().trim().replaceAll("\"","");
