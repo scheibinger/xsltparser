@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<katalog>
+    <tytulKatalogu>Jakis tytul</tytulKatalogu>
+    <ksiazka>
+    <id>
+        <tytul>Pobawmy sie w webmasterow</tytul>
+        <isbn>123456789</isbn>
+        <autor>Jeszcze nieznany</autor>
+    </id>
+    <spisTresci>
+        <rozdzialy>
+            <r>
+                <chapter>Rozdzial 1</chapter>
+                <tytul>ccos tam</tytul>
+                <stron>154</stron>
+            </r>
+            <r>
+                <chapter>Rozdzial 2</chapter>
+                <tytul>bcos tam dwa</tytul>
+                <stron>45</stron>
+            </r>
+            <r>
+                <chapter>Rozdzial 3</chapter>
+                <tytul>acos tam trzy</tytul>
+                <stron>130</stron>
+            </r>
+        </rozdzialy>
+    </spisTresci>
+    </ksiazka>
+    
+</katalog>
+    
