@@ -2252,9 +2252,12 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getSort().apply(this);
         }
-        if(node.getSortOptions() != null)
         {
-            node.getSortOptions().apply(this);
+            List<PSortOptions> copy = new ArrayList<PSortOptions>(node.getSortOptions());
+            for(PSortOptions e : copy)
+            {
+                e.apply(this);
+            }
         }
         if(node.getCloseTag() != null)
         {

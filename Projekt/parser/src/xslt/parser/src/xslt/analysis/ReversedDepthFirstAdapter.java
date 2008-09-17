@@ -2258,9 +2258,13 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getCloseTag().apply(this);
         }
-        if(node.getSortOptions() != null)
         {
-            node.getSortOptions().apply(this);
+            List<PSortOptions> copy = new ArrayList<PSortOptions>(node.getSortOptions());
+            Collections.reverse(copy);
+            for(PSortOptions e : copy)
+            {
+                e.apply(this);
+            }
         }
         if(node.getSort() != null)
         {
