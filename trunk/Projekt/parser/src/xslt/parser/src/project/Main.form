@@ -26,75 +26,85 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabelInfoErrorReport" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabelErrorReport" alignment="0" pref="363" max="32767" attributes="1"/>
-                  <Component id="jScrollPaneXSLPreview" alignment="0" min="-2" pref="363" max="-2" attributes="1"/>
+                  <Component id="jLabelErrorReport" alignment="0" pref="388" max="32767" attributes="1"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="jTextFieldXMLFileName" alignment="1" max="32767" attributes="1"/>
-                          <Component id="jTextFieldXSLfileName" alignment="1" pref="199" max="32767" attributes="1"/>
+                      <Component id="jTextFieldXSLfileName" min="-2" pref="238" max="-2" attributes="1"/>
+                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                      <Component id="jButtonChooseXSLFile" pref="134" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="jScrollPaneXSLPreview" alignment="0" min="-2" pref="388" max="-2" attributes="1"/>
+                  <Component id="jLabelInfoHTMLCodePreview2" alignment="0" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jLabelInfoHTMLCodePreview" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="294" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jScrollPaneHTMLCodePreview" alignment="1" pref="382" max="32767" attributes="1"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jTextFieldXMLFileName" min="-2" pref="215" max="-2" attributes="1"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="jButtonChooseXMLFile" max="32767" attributes="0"/>
+                          </Group>
+                          <Component id="jScrollPaneXMLPreview" alignment="0" pref="382" max="32767" attributes="1"/>
+                          <Component id="jLabelInfoHTMLCodePreview1" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabelInfoHtmlPreview" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jScrollPaneHTMLPreview" alignment="0" min="-2" pref="475" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                              <Component id="jButtonGenerateHTML" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jButtonChooseXMLFile" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButtonChooseXSLFile" pref="158" max="32767" attributes="0"/>
-                      </Group>
                   </Group>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jButtonGenerateHTML" min="-2" max="-2" attributes="0"/>
-                  <Component id="jScrollPaneXMLPreview" min="-2" pref="375" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabelInfoHTMLCodePreview" min="-2" max="-2" attributes="0"/>
-                  <Component id="jScrollPaneHTMLPreview" pref="362" max="32767" attributes="0"/>
-                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                      <Component id="jScrollPaneHTMLCodePreview" min="-2" pref="362" max="-2" attributes="1"/>
-                      <Component id="jLabelInfoHtmlPreview" min="-2" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" max="-2" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jButtonGenerateHTML" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextFieldXSLfileName" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButtonChooseXSLFile" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="jLabelInfoHTMLCodePreview" alignment="1" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jTextFieldXSLfileName" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonChooseXSLFile" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jTextFieldXMLFileName" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonChooseXMLFile" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonGenerateHTML" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabelInfoHtmlPreview" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabelInfoHTMLCodePreview1" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
+                  <Component id="jLabelInfoHTMLCodePreview2" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jScrollPaneHTMLPreview" alignment="0" pref="592" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="jScrollPaneHTMLCodePreview" min="-2" pref="279" max="-2" attributes="1"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabelInfoHtmlPreview" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPaneHTMLPreview" min="-2" pref="312" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" max="-2" attributes="0">
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="jScrollPaneXMLPreview" alignment="0" min="-2" pref="446" max="-2" attributes="0"/>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jButtonChooseXMLFile" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jTextFieldXMLFileName" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jScrollPaneXSLPreview" pref="417" max="32767" attributes="1"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jScrollPaneXSLPreview" pref="421" max="32767" attributes="1"/>
+                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                       <Component id="jLabelInfoErrorReport" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jLabelErrorReport" min="-2" pref="135" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="jScrollPaneXMLPreview" pref="246" max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jLabelInfoHTMLCodePreview" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jScrollPaneHTMLCodePreview" min="-2" pref="315" max="-2" attributes="1"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -179,7 +189,7 @@
     </Container>
     <Component class="javax.swing.JLabel" name="jLabelInfoHtmlPreview">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Podgl&#x105;d HTML"/>
+        <Property name="text" type="java.lang.String" value="Podgl&#x105;d wyj&#x15b;ciowego pliku xHTML"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelInfoHTMLCodePreview">
@@ -218,5 +228,15 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JLabel" name="jLabelInfoHTMLCodePreview1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="podgl&#x105;d XML&apos;a wej&#x15b;ciowego"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabelInfoHTMLCodePreview2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="podgl&#x105;d XML&apos;a wej&#x15b;ciowego"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>
