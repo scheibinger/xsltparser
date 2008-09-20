@@ -1,36 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <katalog>
-    <tytulKatalogu>Jakis tytul</tytulKatalogu>
+    <tytulKatalogu>Edukacja</tytulKatalogu>
     <ksiazka>
     <id>
-        <tytul>Pobawmy sie w webmasterow</tytul>
+        <tytul>Matematyka</tytul>
         <isbn>123456789</isbn>
-        <autor>Jeszcze nieznany</autor>
+        <autor>Zenek ze Szczecina</autor>
     </id>
     <spisTresci>
         <rozdzialy>
             <r>
                 <chapter>Rozdzial 1</chapter>
-                <tytul>ccos tam</tytul>
-                <stron>154</stron>
+                <tytul>Dodawanie</tytul>
+                <stron>2</stron>
             </r>
             <r>
                 <chapter>Rozdzial 2</chapter>
-                <tytul>bcos tam dwa</tytul>
+                <tytul>Odejmowanie</tytul>
                 <stron>45</stron>
             </r>
             <r>
                 <chapter>Rozdzial 3</chapter>
-                <tytul>acos tam trzy</tytul>
+                <tytul>Mnozenie</tytul>
+                <stron>130</stron>
+            </r>
+			<r>
+                <chapter>Rozdzial 4</chapter>
+                <tytul>Dzielenie</tytul>
                 <stron>130</stron>
             </r>
         </rozdzialy>
     </spisTresci>
     </ksiazka>
-     <r>
-    <chapter>Rozdzial 2</chapter>
-    <tytul>cos tam</tytul>
-    </r>
     
 </katalog>
     
