@@ -10,7 +10,7 @@ public class test {
 	{ 
 		try {
 // Create a Parser instance. 
-		Parser p =new Parser(new Lexer(new PushbackReader(new InputStreamReader(new FileInputStream ("test.xslt")), 1024)));
+		Parser p =new Parser(new Lexer(new PushbackReader(new InputStreamReader(new FileInputStream ("test.xslt")), 1024),null),null);
 
 // Parse the input. 
 		Start tree = p.parse();

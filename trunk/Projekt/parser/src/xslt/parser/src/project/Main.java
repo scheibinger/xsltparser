@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PushbackReader;
 import javax.swing.JFileChooser;
+import java.util.ArrayList;
 
 import java.awt.*;
 import javax.swing.*;
@@ -38,7 +39,9 @@ public class Main extends javax.swing.JFrame {
     Lexer lexer;
     final JFileChooser fc;
     final JFileChooser XMLfileChoser;
-    
+    boolean counting=false;
+    int htmlLines=0;
+    ArrayList<Integer> htmlLinesCollection = new ArrayList<Integer>();
     /** Creates new form NewJFrame */
     public Main() {
 
@@ -237,6 +240,24 @@ public class Main extends javax.swing.JFrame {
             FileReader file2 = new FileReader(file);
             BufferedReader bfr = new BufferedReader(file2);
             while((linia = bfr.readLine()) != null){
+                if(!counting)
+                {
+                    if(linia.contains("<")&&!linia.contains("<xsl"))
+                    {
+                        counting=true;
+                    }
+                }
+                else
+                {
+                    if(linia.contains("<xsl"))
+                    {
+                        counting=false;
+                        htmlLinesCollection.add(htmlLines+2);
+                        htmlLines=0;
+                    }
+                    else
+                        htmlLines++;
+                }
                 contentXslt+=line+":    "+linia+'\n';
                 line++;
             }
@@ -252,9 +273,9 @@ public class Main extends javax.swing.JFrame {
        try {
 // Create a Parser instance.
            
-           lexer=new Lexer(new PushbackReader(new InputStreamReader(new FileInputStream (XsltFilePath)), 1024));
+           lexer=new Lexer(new PushbackReader(new InputStreamReader(new FileInputStream (XsltFilePath)), 1024),htmlLinesCollection);
                 
-           Parser p =new Parser(lexer);
+           Parser p =new Parser(lexer,htmlLinesCollection);
        
 // Parse the input. 
 		Start tree = p.parse();

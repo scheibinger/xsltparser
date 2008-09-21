@@ -3,6 +3,7 @@
 package xslt.lexer;
 
 import java.io.*;
+import java.util.ArrayList;
 import xslt.node.*;
 
 @SuppressWarnings("nls")
@@ -17,16 +18,17 @@ public class Lexer
     private boolean cr;
     private boolean eof;
     private final StringBuffer text = new StringBuffer();
-
+    private ArrayList<Integer> htmlLinesCollection = new ArrayList<Integer>();
     @SuppressWarnings("unused")
     protected void filter() throws LexerException, IOException
     {
         // Do nothing
     }
 
-    public Lexer(@SuppressWarnings("hiding") PushbackReader in)
+    public Lexer(@SuppressWarnings("hiding") PushbackReader in,ArrayList<Integer> htmlLinesCollection)
     {
         this.in = in;
+        this.htmlLinesCollection = htmlLinesCollection;
     }
  
     public Token peek() throws LexerException, IOException
@@ -1771,8 +1773,9 @@ public class Lexer
                 {
                     if(this.text.length() > 0)
                     {
+                        int start_line2 = start_line-htmlLinesCollection.get(0);
                         throw new LexerException(
-                            "[" + (start_line + 1) + "," + (start_pos + 1) + "]" +
+                            "[" + (start_line2 + 1) + "," + (start_pos + 1) + "]" +
                             " Unknown token: " + this.text);
                     }
 
