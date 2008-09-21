@@ -10,6 +10,7 @@ import java.util.*;
 import java.io.DataInputStream;
 import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 @SuppressWarnings("nls")
 public class Parser
@@ -25,15 +26,16 @@ public class Parser
     private Token last_token;
     private final TokenIndex converter = new TokenIndex();
     private final int[] action = new int[2];
-
+    private ArrayList<Integer> htmlLinesCollection = new ArrayList<Integer>();
     private final static int SHIFT = 0;
     private final static int REDUCE = 1;
     private final static int ACCEPT = 2;
     private final static int ERROR = 3;
 
-    public Parser(@SuppressWarnings("hiding") Lexer lexer)
+    public Parser(@SuppressWarnings("hiding") Lexer lexer,ArrayList<Integer> htmlLinesCollection)
     {
         this.lexer = lexer;
+        this.htmlLinesCollection = htmlLinesCollection;
     }
 
     protected void filter() throws ParserException, LexerException, IOException
@@ -797,9 +799,12 @@ public class Parser
                         return node;
                     }
                 case ERROR:
+                {
+                    this.last_line-=htmlLinesCollection.get(0);
                     throw new ParserException(this.last_token,
-                        "[" + this.last_line + "," + this.last_pos + "] " +
+                        "[" + this.last_line+ "," + this.last_pos + "] " +
                         Parser.errorMessages[Parser.errors[this.action[1]]]);
+                }
             }
         }
     }
